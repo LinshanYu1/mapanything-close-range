@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "scene_id": "graspnet_pilot",
+  "source": "graspnet",
+  "views": [
+    {
+      "id": "view_001",
+      "image": "data/processed/graspnet/graspnet_pilot/view_001.png",
+      "sha256": "006c74bea063ff56cfed37847ab1b250656b4810257bb59942c041dc140f2cc0",
+      "legacy_frame": 0
+    },
+    {
+      "id": "view_002",
+      "image": "data/processed/graspnet/graspnet_pilot/view_002.png",
+      "sha256": "cbfb2c8a7a7c410c26865ca41ffe75f01e042d06578628024a6aafe15f5660ef",
+      "legacy_frame": 12
+    },
+    {
+      "id": "view_003",
+      "image": "data/processed/graspnet/graspnet_pilot/view_003.png",
+      "sha256": "9709ea75848e76f7d59fff9bfc29dedbdf7837d200374605f2ec09ac5a3f16ea",
+      "legacy_frame": 24
+    },
+    {
+      "id": "view_004",
+      "image": "data/processed/graspnet/graspnet_pilot/view_004.png",
+      "sha256": "dc36d748fab1a1fbe9fe82ab62fd3e39fc8559a6d342452ac22ac9184ab4722d",
+      "legacy_frame": 36
+    },
+    {
+      "id": "view_005",
+      "image": "data/processed/graspnet/graspnet_pilot/view_005.png",
+      "sha256": "9d3969d059fc3fb7a29fe56987d77d08ee1889f4147b5f3a50dde150f40cf63f",
+      "legacy_frame": 48
+    },
+    {
+      "id": "view_006",
+      "image": "data/processed/graspnet/graspnet_pilot/view_006.png",
+      "sha256": "0f88072a8fd478e40c096ae30452943dc5d8cbdcff5f509bf25aa96b9b234967",
+      "legacy_frame": 60
+    },
+    {
+      "id": "view_007",
+      "image": "data/processed/graspnet/graspnet_pilot/view_007.png",
+      "sha256": "8406f95fa00cfb405fc0cc56c063fabc0adc2f42dc6eb62210ea5fc585a66b0e",
+      "legacy_frame": 72
+    },
+    {
+      "id": "view_008",
+      "image": "data/processed/graspnet/graspnet_pilot/view_008.png",
+      "sha256": "9260c33d1a482411d5092f5ab7460395a367dd9b9edb9ae87a0e66bb8953b01a",
+      "legacy_frame": 84
+    },
+    {
+      "id": "view_009",
+      "image": "data/processed/graspnet/graspnet_pilot/view_009.png",
+      "sha256": "3a1b335d1405ac3043806492494968da88e738f0667ccf5b28ccd37d3d54c365",
+      "legacy_frame": 96
+    },
+    {
+      "id": "view_010",
+      "image": "data/processed/graspnet/graspnet_pilot/view_010.png",
+      "sha256": "868673c0d721f191c6be431e214a991e4c2e5a05ca51b96eb68ab63f34748edf",
+      "legacy_frame": 108
+    },
+    {
+      "id": "view_011",
+      "image": "data/processed/graspnet/graspnet_pilot/view_011.png",
+      "sha256": "6270a57b9897c7f6a69e1880dcaf0765bb6d99de03ccd8f4f83e9eaa928cd6e9",
+      "legacy_frame": 120
+    },
+    {
+      "id": "view_012",
+      "image": "data/processed/graspnet/graspnet_pilot/view_012.png",
+      "sha256": "25e458dff2cb3584229e6a23e59ea93153db0d30e05796b368df33c77fe1fc2f",
+      "legacy_frame": 132
+    },
+    {
+      "id": "view_013",
+      "image": "data/processed/graspnet/graspnet_pilot/view_013.png",
+      "sha256": "5d692c33fbe1ba94babdca3f9faf13fbc5ff5dcde60b82baf635cea4d0d87fa8",
+      "legacy_frame": 144
+    },
+    {
+      "id": "view_014",
+      "image": "data/processed/graspnet/graspnet_pilot/view_014.png",
+      "sha256": "7038b45a99e6f5b83eb9f8af21a40dde411814da4271369b61dabef16b9d999a",
+      "legacy_frame": 156
+    },
+    {
+      "id": "view_015",
+      "image": "data/processed/graspnet/graspnet_pilot/view_015.png",
+      "sha256": "891a1038ada676aacaeb37c13f7a93fdbc542e3dbe4fcb7e25e91a2978fa8534",
+      "legacy_frame": 168
+    },
+    {
+      "id": "view_016",
+      "image": "data/processed/graspnet/graspnet_pilot/view_016.png",
+      "sha256": "4ce3dadd5df8c7039fbef84a3ebad2a067872c32c3fe795cc522a916778692ff",
+      "legacy_frame": 180
+    },
+    {
+      "id": "view_017",
+      "image": "data/processed/graspnet/graspnet_pilot/view_017.png",
+      "sha256": "9dd359d214ae2cc7f5ba3576dfe33ff4028b2bf232144b586f5503abcf8a4aea",
+      "legacy_frame": 192
+    },
+    {
+      "id": "view_018",
+      "image": "data/processed/graspnet/graspnet_pilot/view_018.png",
+      "sha256": "7f1d6b613ca86c2adfdb78382125407864949d7c15f016950e3a91802d079086",
+      "legacy_frame": 204
+    },
+    {
+      "id": "view_019",
+      "image": "data/processed/graspnet/graspnet_pilot/view_019.png",
+      "sha256": "fff370ee6f4151c66cece545c6adb3905bab0c58ea766606bc26be6d79c215f3",
+      "legacy_frame": 216
+    },
+    {
+      "id": "view_020",
+      "image": "data/processed/graspnet/graspnet_pilot/view_020.png",
+      "sha256": "4e5d6889698e1915a9e153edf7fd6903d96d5c32936e53711a06f97c5e970fe9",
+      "legacy_frame": 228
+    }
+  ],
+  "reference_index": 0,
+  "model_size": [
+    518,
+    294
+  ],
+  "annotation": "data/annotations/graspnet/graspnet_pilot.json",
+  "preprocessing": "Explicit RGB resize 1280x720 to 518x294; half-pixel coordinate mapping; slight aspect change",
+  "legacy_manifest": "/Users/linshanyu/Desktop/dl-project/output/distance_pilot_20/manifest.json"
+}

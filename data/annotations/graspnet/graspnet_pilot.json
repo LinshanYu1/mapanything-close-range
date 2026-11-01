@@ -1,0 +1,25 @@
+{
+  "scene_id": "graspnet_pilot",
+  "reference_view_id": "view_001",
+  "image_sha256": "006c74bea063ff56cfed37847ab1b250656b4810257bb59942c041dc140f2cc0",
+  "coordinate_space": "model_input_pixels_xy",
+  "pairs": [
+    {
+      "id": "pair_001",
+      "points_xy": [
+        [
+          246.56171874999998,
+          80.55416666666666
+        ],
+        [
+          323.45234374999995,
+          134.45416666666665
+        ]
+      ],
+      "distance_m": 0.10654866149808893,
+      "label_source": "sensor_depth",
+      "label_valid": true,
+      "measurement_note": "Frame 0000 sensor depth, NOT independent metrology"
+    }
+  ]
+}
