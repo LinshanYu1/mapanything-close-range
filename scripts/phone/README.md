@@ -12,13 +12,17 @@ data/raw/phone/
     └── view_001.jpg
 ```
 
-`distances.conf` 记录对应实际测量端点之间的距离，单位固定 inch：
+`distances.conf` 记录对应实际测量端点之间的距离。数值后可带单位 `cm`、`mm`、`m`、`in`；不写单位按 inch 处理（兼容旧配置）。内部统一换算，标注文件仍记录 inch 和米。可用 `#` 写备注，单独一行或写在数值后面（`#` 前需有空格）：
 
 ```ini
 [distances]
 scene-001 = 17
-scene-002 = 12
+# 透明水壶
+scene-002 = 42cm
+scene-003 = 60 cm   # 风扇后有镜子
 ```
+
+注意：已标注场景的距离若改了写法（例如 `9.843` 改成 `25cm`），换算后数值有微小差异，评估会提示配置已变更，需要对该场景重新标注。
 
 ## 1. 图片预处理
 
@@ -36,15 +40,32 @@ bash scripts/local.sh scripts/phone/prepare.py --scene scene-002
 
 生成 `data/processed/phone/<场景>/` 图片及 `data/manifests/phone/<场景>.json` 清单。已有图片目录和清单时跳过，不覆盖、不自动检测原图更新；若只存在部分输出则报错。一个场景失败后继续其他场景，最终返回失败状态。
 
+处理新场景前会检查照片：
+
+- 场景目录里有 HEIC/HEIF/DNG/WEBP/TIFF 等不支持的照片时报错，避免被悄悄跳过。请先转成 JPG/PNG 或移走。
+- 同一场景横拍、竖拍混在一起时报错（按 EXIF 旋转后判断）。所有照片会裁成同一尺寸，方向不同的照片可能裁掉标记点。确需保留时加 `--allow-mixed-orientation`。
+- 终端显示每个场景的照片数、方向、处理尺寸和参考图文件名，方便核对。
+
 ## 2. 点击 A/B 标注
 
-当前标注入口仍然每次处理一个清单的参考图，并非自动逐场景弹窗：
+不带参数时，依次打开所有已预处理、尚未标注的场景（跳过已标注和缺少参考图的场景）：
 
 ```bash
-bash scripts/local.sh scripts/phone/annotate.py --manifest data/manifests/phone/scene-002.json
+bash scripts/local.sh scripts/phone/annotate.py
 ```
 
-依次点击实际测量的 A、B 端点，真实距离自动从 distances.conf 读取。输出 `data/annotations/phone/scene-002.json` 和 `scene-002.preview.png`。不修改模型输入图片。重新标注加 `--overwrite`；不指定清单时默认 scene-001。
+每个窗口依次点击实际测量的 A、B 端点，选齐自动保存并打开下一个场景。不点满两点就关闭窗口会停止批量标注，已保存的不受影响，重新运行会从剩下的场景继续。
+
+只标注或重新标注一个场景：
+
+```bash
+bash scripts/local.sh scripts/phone/annotate.py --scene scene-002
+bash scripts/local.sh scripts/phone/annotate.py --scene scene-002 --overwrite
+```
+
+`--manifest data/manifests/phone/scene-002.json` 仍可使用，与 `--scene` 二选一。`--overwrite` 和 `--points` 只能和指定场景一起用，批量模式不会覆盖已有标注。
+
+真实距离自动从 distances.conf 读取。输出 `data/annotations/phone/<场景>.json` 和 `<场景>.preview.png`，请检查预览中的圆点是否落在端点上。不修改模型输入图片。
 
 ## 3. 预测与评估
 

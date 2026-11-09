@@ -7,6 +7,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 
 from close_range.common import ROOT, save, sha, phone_distance
+from close_range.phone_checks import check_orientation, scene_images
 from PIL import Image, ImageOps
 from mapanything.utils.image import find_closest_aspect_ratio
 from mapanything.utils.cropping import crop_resize_if_necessary
@@ -17,13 +18,6 @@ def prepare_scene(a):
         raise ValueError("Use a simple scene name")
     distance, distance_config = phone_distance(a.scene)
     raw = ROOT / "data/raw/phone" / a.scene
-    files = sorted(
-        f
-        for f in raw.iterdir()
-        if f.is_file() and f.suffix.lower() in {".jpg", ".jpeg", ".png"}
-    )
-    if not files:
-        raise ValueError("No JPG/PNG input images found")
     out = ROOT / "data/processed/phone" / a.scene
     manifest = ROOT / "data/manifests/phone" / f"{a.scene}.json"
     if manifest.is_file() and out.is_dir():
@@ -33,10 +27,16 @@ def prepare_scene(a):
         raise ValueError(
             "Prepared scene already exists; use a new scene name to avoid invalidating annotations"
         )
+    files = scene_images(raw)
     imgs = []
     for f in files:
         with Image.open(f) as im:
             imgs.append(ImageOps.exif_transpose(im).convert("RGB"))
+    kind = check_orientation(
+        [f.name for f in files],
+        [im.size for im in imgs],
+        getattr(a, "allow_mixed_orientation", False),
+    )
     size = find_closest_aspect_ratio(
         sum(im.width / im.height for im in imgs) / len(imgs), 518
     )
@@ -68,19 +68,31 @@ def prepare_scene(a):
             preprocessing="Upstream crop_resize_if_necessary, EXIF oriented RGB, annotate model-input pixels",
         ),
     )
-    print(f"Prepared {len(views)} images at {size}. Manifest: {manifest}")
+    print(
+        f"[{a.scene}] Prepared {len(views)} {kind} images at {size}. "
+        f"Reference: {files[0].name}. Manifest: {manifest}"
+    )
 
 
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--scene", help="Only this scene; omit to scan all phone scenes")
+    p.add_argument(
+        "--allow-mixed-orientation",
+        action="store_true",
+        help="Accept landscape and portrait photos in one scene (endpoints may be cropped)",
+    )
     a = p.parse_args()
     from close_range.scene_batch import run_scenes
 
     run_scenes(
         ROOT / "data/raw/phone",
         a.scene,
-        lambda scene: prepare_scene(argparse.Namespace(scene=scene)),
+        lambda scene: prepare_scene(
+            argparse.Namespace(
+                scene=scene, allow_mixed_orientation=a.allow_mixed_orientation
+            )
+        ),
     )
 
 
