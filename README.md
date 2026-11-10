@@ -46,7 +46,7 @@ bash scripts/local.sh scripts/predict_directory.py --input data/processed/graspn
 
 ## 一、先理解三个不同的东西
 
-- **实测距离**：用尺子量出来的答案，填写在 `distances.conf`，单位固定为 inch。
+- **实测距离**：用尺子量出来的答案，填写在 `distances.conf`。可写 `cm`、`mm`、`m`、`in` 单位，不写单位按 inch。
 - **点位标注**：在图片窗口中点击 A、B，告诉程序测哪两个位置。脚本保存的是像素坐标，不会从点击行为得知真实距离。
 - **预测距离**：模型先预测整张图的三维点位置，评估脚本再取出 A、B 对应的三维坐标计算距离。
 
@@ -68,13 +68,13 @@ run_baseline.py：仅用图片预测参考图的三维点图
 evaluate.py：读取 A/B 坐标，计算距离，与实测值比较
 ```
 
-**当前是先预处理、再标注第一张参考图。** 讨论过的“自动遍历全部场景、逐张原图标注、再转换坐标”的流程尚未实现。不要把计划中的功能当成当前脚本行为；当前标注入口使用 `--manifest` 指定场景，不支持 `--scene`。
+**当前是先预处理、再标注第一张参考图。** 讨论过的“自动遍历全部场景、逐张原图标注、再转换坐标”的流程尚未实现。不要把计划中的功能当成当前脚本行为；当前标注入口用 `--scene` 或 `--manifest` 指定场景，不带参数时依次标注所有尚未标注的场景。
 
 ## 三、怎么拍照和测量
 
 1. 两个物体固定不动，选取清晰、可以再次找到的表面端点 A、B。可以在实物上贴纸并画小十字，以交点作为端点。
 2. 用尺子测量两个端点之间的空间直线距离，避免尺子弯曲或沿物体表面绕行。两点高度不同就量连接两点的斜线，不是水平投影距离。
-3. 记录数值，单位 inch。例：17 inch = 43.18 cm = 0.4318 m。单位转换不意味着手工测量精度达到 0.01 cm。
+3. 记录数值并写明单位，例如 `43cm` 或 `17in`（不写单位按 inch）。单位转换不意味着手工测量精度达到 0.01 cm。
 4. 移开尺子和手，不改变物体位置，从不同位置拍照；保留共同可见区域，确保参考图能清楚看到两个端点。
 5. 保存未后期画点、未添加 A/B 文字的原照片。建议保持同一镜头、清晰对焦和稳定光照，传输时尽量保留原始文件。
 
@@ -149,10 +149,10 @@ export TORCH_HOME="$PWD/.cache/torch"
 编辑 `data/raw/phone/distances.conf`：
 
 ```ini
-# 所有值固定为 inch；以下 scene-002 数值仅作示例，应替换为实际测量值
+# 可写 cm/mm/m/in，不写单位按 inch；以下 scene-002 数值仅作示例，应替换为实际测量值
 [distances]
 scene-001 = 17
-scene-002 = 10
+scene-002 = 25cm
 ```
 
 一个场景默认一个固定物理点对和一个距离。目录名必须与 key 完全一致，距离必须为正的有限数字。
@@ -172,7 +172,7 @@ bash scripts/local.sh scripts/phone/prepare.py --scene scene-002
 ### 3. 点击两个测量点
 
 ```bash
-bash scripts/local.sh scripts/phone/annotate.py --manifest data/manifests/phone/scene-002.json
+bash scripts/local.sh scripts/phone/annotate.py --scene scene-002
 ```
 
 程序读取配置中的实测距离，在窗口显示处理后的参考图。用左键先点端点 A，再点端点 B，两点选齐即保存。可用工具栏缩放查看细节，退出缩放模式后再选点；第二点确认前可用右键撤销。必须点击尺子实际测量的端点，不能随意换成白纸中心。
@@ -182,7 +182,7 @@ bash scripts/local.sh scripts/phone/annotate.py --manifest data/manifests/phone/
 重新选择：
 
 ```bash
-bash scripts/local.sh scripts/phone/annotate.py --manifest data/manifests/phone/scene-002.json --overwrite
+bash scripts/local.sh scripts/phone/annotate.py --scene scene-002 --overwrite
 ```
 
 如果修改了 distances.conf，也需重新确认标注。评估会拒绝配置与已保存标签不一致的结果。坐标属于处理后图片，不能直接填原始大图坐标。
@@ -216,7 +216,7 @@ bash scripts/local.sh scripts/run_baseline.py --mode multi --output outputs/phon
 bash scripts/local.sh scripts/evaluate.py --run outputs/phone_multi_002
 ```
 
-若要重新选点，运行 `bash scripts/local.sh scripts/phone/annotate.py --overwrite`。
+若要重新选点，运行 `bash scripts/local.sh scripts/phone/annotate.py --scene scene-001 --overwrite`。
 
 ## 八、怎么看结果
 
@@ -272,7 +272,7 @@ bash scripts/local.sh scripts/evaluate.py --manifest data/manifests/graspnet/gra
 | local.sh | 选择环境、设置缓存、启动 Python |
 | src/close_range/common.py | 文件读写、路径、版本、距离配置校验 |
 | phone/prepare.py | 默认扫描手机场景，也支持 --scene 指定场景 |
-| phone/annotate.py | 单个场景参考图上的 A/B 点击标注 |
+| phone/annotate.py | 参考图 A/B 点击标注；默认依次标注未标注场景，--scene 指定单个 |
 | predict_directory.py | 遍历场景目录，自动选择单图/多图预测并评估 |
 | tools/ | 共用检查工具预留目录 |
 | run_baseline.py | RGB-only 模型预测，不读取标签 |
