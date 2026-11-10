@@ -1,5 +1,5 @@
 {
   "repository": "https://github.com/facebookresearch/map-anything",
   "commit": "3d10cf7a3016fc0f9bb13a071ee66c47b10be0d9",
-  "local_changes": ""
+  "local_changes": "Optional scale_correction hook in MapAnything.downstream_head, before metric geometry scaling; module implemented in src/close_range/models/scale_correction.py."
 }

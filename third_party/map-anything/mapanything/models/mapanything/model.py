@@ -1525,6 +1525,21 @@ class MapAnything(nn.Module, PyTorchModelHubMixin):
         )
         scale_final_output = scale_final_output.value.squeeze(-1)  # (B, 1, 1) -> (B, 1)
 
+        # Optional close-range Module A. Original baseline is unchanged if absent.
+        if hasattr(self, "scale_correction"):
+            local_features = (
+                dense_head_inputs[-1]
+                if isinstance(dense_head_inputs, (list, tuple))
+                else dense_head_inputs
+            )
+            # UniCeption uses channel-first features: (V*B,C,H,W), (B,C,T).
+            local_tokens = local_features.flatten(2).transpose(1, 2)
+            global_tokens = scale_head_inputs.transpose(1, 2)
+            correction = self.scale_correction(global_tokens, local_tokens)
+            if correction.shape != scale_final_output.shape:
+                raise ValueError("Scale correction must have shape (B, 1)")
+            scale_final_output = scale_final_output * correction
+
         # Clear device cache for better memory efficiency
         if memory_efficient_inference:
             empty_cache(device)
