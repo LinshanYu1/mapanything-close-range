@@ -1,0 +1,91 @@
+--- a/uniception/models/utils/transformer_blocks.py
++++ b/uniception/models/utils/transformer_blocks.py
+@@ -205,7 +205,7 @@
+         self.base_token_count_for_entropy_scaling = base_token_count_for_entropy_scaling
+         self.entropy_scaling_growth_factor = entropy_scaling_growth_factor
+ 
+-    def forward(self, x: torch.Tensor, xpos: torch.Tensor = None) -> torch.Tensor:
++    def forward(self, x: torch.Tensor, xpos: torch.Tensor = None, attention_bias=None) -> torch.Tensor:
+         """
+         Forward pass of the Attention layer.
+ 
+@@ -240,13 +240,18 @@
+             )
+             q = q * scaling_factor
+ 
++        if attention_bias is not None:
++            attention_bias = attention_bias.to(dtype=q.dtype)
++
+         if self.fused_attn:
+             x = F.scaled_dot_product_attention(
+-                q, k, v, dropout_p=(self.attn_drop.p if self.training else 0.0), scale=self.scale
++                q, k, v, attn_mask=attention_bias, dropout_p=(self.attn_drop.p if self.training else 0.0), scale=self.scale
+             )
+         else:
+             q = q * self.scale
+             attn = q @ k.transpose(-2, -1)
++            if attention_bias is not None:
++                attn = attn + attention_bias
+             attn = attn.softmax(dim=-1)
+             attn = self.attn_drop(attn)
+             x = attn @ v
+@@ -494,7 +499,7 @@
+ 
+         self.custom_positional_encoding = custom_positional_encoding
+ 
+-    def forward(self, x: torch.Tensor, xpos: torch.Tensor = None) -> torch.Tensor:
++    def forward(self, x: torch.Tensor, xpos: torch.Tensor = None, attention_bias=None) -> torch.Tensor:
+         """
+         Forward pass of the Self-Attention Block.
+ 
+@@ -509,7 +514,11 @@
+             assert (
+                 xpos is not None
+             ), "Positions of tokens (xpos) are a required input when using custom positional encoding"
+-        x = x + self.drop_path1(self.ls1(self.attn(self.norm1(x), xpos)))
++        if attention_bias is None:
++            attention_output = self.attn(self.norm1(x), xpos)
++        else:
++            attention_output = self.attn(self.norm1(x), xpos, attention_bias=attention_bias)
++        x = x + self.drop_path1(self.ls1(attention_output))
+         x = x + self.drop_path2(self.ls2(self.mlp(self.norm2(x))))
+         return x
+ 
+--- a/uniception/models/info_sharing/alternating_attention_transformer.py
++++ b/uniception/models/info_sharing/alternating_attention_transformer.py
+@@ -618,6 +618,8 @@
+             intermediates_only=intermediates_only,
+         )
+ 
++    supports_view_bias = True
++
+     def forward(
+         self,
+         model_input: MultiViewTransformerInput,
+@@ -812,7 +814,25 @@
+             if depth_idx % 2 == 0:
+                 # Apply the self-attention block and update the multi-view features
+                 # Global attention across all views
+-                multi_view_features = self.self_attention_blocks[depth_idx](multi_view_features, multi_view_positions)
++                block = self.self_attention_blocks[depth_idx]
++                attention_bias = None
++                if hasattr(self, "view_scorer") and self.view_fusion_enabled:
++                    # Match the normalized features seen by this layer's attention.
++                    normalized = block.norm1(multi_view_features)
++                    per_view = normalized[:, :num_of_views * num_of_tokens_per_view].reshape(
++                        batch_size, num_of_views, num_of_tokens_per_view, self.dim
++                    )
++                    scores = self.view_scorer(per_view[:, :, :height * width])
++                    # Each view's patches and registers share its score.
++                    key_scores = scores.repeat_interleave(num_of_tokens_per_view, dim=1)
++                    global_count = multi_view_features.shape[1] - key_scores.shape[1]
++                    key_scores = torch.cat(
++                        [key_scores, scores.new_zeros(batch_size, global_count)], dim=1
++                    )
++                    attention_bias = key_scores[:, None, None, :]
++                multi_view_features = block(
++                    multi_view_features, multi_view_positions, attention_bias=attention_bias
++                )
+             else:
+                 # Handle additional tokens separately for frame-level attention
+                 additional_features = None
