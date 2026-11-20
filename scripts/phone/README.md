@@ -24,6 +24,24 @@ scene-003 = 60 cm   # 风扇后有镜子
 
 注意：已标注场景的距离若改了写法（例如 `9.843` 改成 `25cm`），换算后数值有微小差异，评估会提示配置已变更，需要对该场景重新标注。
 
+## 0. 下载共享照片（可选）
+
+照片和 `distances.conf` 不进 Git，统一放在共享的 Google Drive 文件夹里（结构与 `data/raw/phone/` 相同：每个场景一个 `scene-XXX` 子文件夹，加一个 `distances.conf`，文件夹需设为“知道链接的任何人可查看”）。下载到本地：
+
+```bash
+bash scripts/local.sh scripts/phone/download.py --folder https://drive.google.com/drive/folders/<ID>
+```
+
+Drive 限流时，先用浏览器下载整个文件夹（得到文件夹或 zip），再导入：
+
+```bash
+bash scripts/local.sh scripts/phone/download.py --source ~/Downloads/<文件夹或.zip>
+```
+
+`--folder` 只下载本地还没有的场景，逐个文件下载并自动重试；某个场景有文件下载失败（Drive 限流）时整组不导入，稍后重跑即可补上。
+
+规则：本地已有且内容相同的场景跳过；本地已有但不同的场景、或距离数值不同的条目只报告冲突，不覆盖；`distances.conf` 中本地没有的条目连同上方注释追加到本地文件。有冲突时返回非零退出码。导入后照常运行 prepare 与 annotate。
+
 ## 1. 图片预处理
 
 默认扫描 `data/raw/phone/` 下所有非隐藏场景目录：
