@@ -1,0 +1,28 @@
+{
+  "scene_id": "scene-032",
+  "reference_view_id": "view_001",
+  "image_sha256": "b53212d8334190b4ba5b407eb837a4d7e310016dd3ca03793ad7f3cecb05c03c",
+  "coordinate_space": "model_input_pixels_xy",
+  "pairs": [
+    {
+      "id": "pair_001",
+      "points_xy": [
+        [
+          212.25757575757584,
+          164.3888888888889
+        ],
+        [
+          330.7626262626263,
+          130.44949494949498
+        ]
+      ],
+      "distance_m": 0.08001,
+      "measurement_value": 3.15,
+      "measurement_unit": "inch",
+      "distance_config": "data/raw/phone/distances.conf",
+      "label_source": "manual_tape",
+      "label_valid": true,
+      "measurement_note": "User-reported measurement; uncertainty not quantified"
+    }
+  ]
+}

@@ -53,7 +53,7 @@ bash scripts/local.sh scripts/phone/prepare.py
 只处理一个场景：
 
 ```bash
-bash scripts/local.sh scripts/phone/prepare.py --scene scene-002
+bash scripts/local.sh scripts/phone/prepare.py --scene scene-021
 ```
 
 生成 `data/processed/phone/<场景>/` 图片及 `data/manifests/phone/<场景>.json` 清单。已有图片目录和清单时跳过，不覆盖、不自动检测原图更新；若只存在部分输出则报错。一个场景失败后继续其他场景，最终返回失败状态。
@@ -77,8 +77,7 @@ bash scripts/local.sh scripts/phone/annotate.py
 只标注或重新标注一个场景：
 
 ```bash
-bash scripts/local.sh scripts/phone/annotate.py --scene scene-002
-bash scripts/local.sh scripts/phone/annotate.py --scene scene-002 --overwrite
+bash scripts/local.sh scripts/phone/annotate.py --manifest data/manifests/phone/scene-021.json
 ```
 
 `--manifest data/manifests/phone/scene-002.json` 仍可使用，与 `--scene` 二选一。`--overwrite` 和 `--points` 只能和指定场景一起用，批量模式不会覆盖已有标注。

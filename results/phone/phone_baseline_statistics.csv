@@ -1,0 +1,3 @@
+mode,total,valid,valid_rate_pct,mae_cm_valid,mean_relative_error_pct_valid,median_scale_ratio_valid,success_10pct_all
+single,20,15,75.0,19.943818541694643,90.79787689755712,1.8190511254985384,5.0
+multi,20,15,75.0,17.15732233129374,89.91988300153932,1.711895525439808,5.0
