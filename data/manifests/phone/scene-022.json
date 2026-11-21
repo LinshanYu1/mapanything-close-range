@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "scene_id": "scene-022",
+  "source": "phone",
+  "distance_config": "data/raw/phone/distances.conf",
+  "views": [
+    {
+      "id": "view_001",
+      "image": "data/processed/phone/scene-022/view_001.png",
+      "sha256": "a6cdaa18f367c6d483a12704d611b504729fbbf6a8264f271de669705b7a9d77",
+      "original": "data/raw/phone/scene-022/view_001.jpg",
+      "oriented_original_size": [
+        1706,
+        1280
+      ]
+    },
+    {
+      "id": "view_002",
+      "image": "data/processed/phone/scene-022/view_002.png",
+      "sha256": "5f7d56e2e9b18f52be7d4f6d93b2dafaf47776c71de461ef75a369edae8a44a5",
+      "original": "data/raw/phone/scene-022/view_002.jpg",
+      "oriented_original_size": [
+        1706,
+        1280
+      ]
+    },
+    {
+      "id": "view_003",
+      "image": "data/processed/phone/scene-022/view_003.png",
+      "sha256": "65a51757d190150239b34e455d8c822fdf31f382b07de6294a4bdb2f921279e6",
+      "original": "data/raw/phone/scene-022/view_003.jpg",
+      "oriented_original_size": [
+        1706,
+        1280
+      ]
+    }
+  ],
+  "reference_index": 0,
+  "model_size": [
+    518,
+    392
+  ],
+  "annotation": "data/annotations/phone/scene-022.json",
+  "preprocessing": "Upstream crop_resize_if_necessary, EXIF oriented RGB, annotate model-input pixels"
+}

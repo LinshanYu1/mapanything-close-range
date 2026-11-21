@@ -31,7 +31,7 @@ bash scripts/local.sh scripts/phone/prepare.py
 只处理一个场景：
 
 ```bash
-bash scripts/local.sh scripts/phone/prepare.py --scene scene-002
+bash scripts/local.sh scripts/phone/prepare.py --scene scene-021
 ```
 
 生成 `data/processed/phone/<场景>/` 图片及 `data/manifests/phone/<场景>.json` 清单。已有图片目录和清单时跳过，不覆盖、不自动检测原图更新；若只存在部分输出则报错。一个场景失败后继续其他场景，最终返回失败状态。
@@ -41,7 +41,7 @@ bash scripts/local.sh scripts/phone/prepare.py --scene scene-002
 当前标注入口仍然每次处理一个清单的参考图，并非自动逐场景弹窗：
 
 ```bash
-bash scripts/local.sh scripts/phone/annotate.py --manifest data/manifests/phone/scene-002.json
+bash scripts/local.sh scripts/phone/annotate.py --manifest data/manifests/phone/scene-021.json
 ```
 
 依次点击实际测量的 A、B 端点，真实距离自动从 distances.conf 读取。输出 `data/annotations/phone/scene-002.json` 和 `scene-002.preview.png`。不修改模型输入图片。重新标注加 `--overwrite`；不指定清单时默认 scene-001。

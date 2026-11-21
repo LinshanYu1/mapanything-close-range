@@ -149,7 +149,7 @@ export TORCH_HOME="$PWD/.cache/torch"
 编辑 `data/raw/phone/distances.conf`：
 
 ```ini
-# 所有值固定为 inch；以下 scene-002 数值仅作示例，应替换为实际测量值
+# 所有值固定为 inch；以下 scene-021 数值仅作示例，应替换为实际测量值
 [distances]
 scene-001 = 17
 scene-002 = 10
@@ -160,7 +160,7 @@ scene-002 = 10
 ### 2. 准备图片
 
 ```bash
-bash scripts/local.sh scripts/phone/prepare.py --scene scene-002
+bash scripts/local.sh scripts/phone/prepare.py --scene scene-021
 ```
 
 脚本校正 EXIF 方向、转成 RGB，按这组图片的平均宽高比选择官方输入尺寸，再进行保持比例的缩放和必要裁剪。当前 scene-001 为 518×392，其他比例可能不同。清单记录的是处理图文件哈希，后续加载会检查它是否改变。
@@ -172,7 +172,7 @@ bash scripts/local.sh scripts/phone/prepare.py --scene scene-002
 ### 3. 点击两个测量点
 
 ```bash
-bash scripts/local.sh scripts/phone/annotate.py --manifest data/manifests/phone/scene-002.json
+bash scripts/local.sh scripts/phone/annotate.py --manifest data/manifests/phone/scene-021.json
 ```
 
 程序读取配置中的实测距离，在窗口显示处理后的参考图。用左键先点端点 A，再点端点 B，两点选齐即保存。可用工具栏缩放查看细节，退出缩放模式后再选点；第二点确认前可用右键撤销。必须点击尺子实际测量的端点，不能随意换成白纸中心。
@@ -182,7 +182,7 @@ bash scripts/local.sh scripts/phone/annotate.py --manifest data/manifests/phone/
 重新选择：
 
 ```bash
-bash scripts/local.sh scripts/phone/annotate.py --manifest data/manifests/phone/scene-002.json --overwrite
+bash scripts/local.sh scripts/phone/annotate.py --manifest data/manifests/phone/scene-021.json --overwrite
 ```
 
 如果修改了 distances.conf，也需重新确认标注。评估会拒绝配置与已保存标签不一致的结果。坐标属于处理后图片，不能直接填原始大图坐标。
@@ -190,15 +190,15 @@ bash scripts/local.sh scripts/phone/annotate.py --manifest data/manifests/phone/
 ### 4. 单图推理与评分
 
 ```bash
-bash scripts/local.sh scripts/run_baseline.py --manifest data/manifests/phone/scene-002.json --mode single --output outputs/scene002_single_001
-bash scripts/local.sh scripts/evaluate.py --manifest data/manifests/phone/scene-002.json --run outputs/scene002_single_001
+bash scripts/local.sh scripts/run_baseline.py --manifest data/manifests/phone/scene-021.json --mode single --output outputs/scene002_single_001
+bash scripts/local.sh scripts/evaluate.py --manifest data/manifests/phone/scene-021.json --run outputs/scene002_single_001
 ```
 
 ### 5. 多图推理与评分
 
 ```bash
-bash scripts/local.sh scripts/run_baseline.py --manifest data/manifests/phone/scene-002.json --mode multi --output outputs/scene002_multi_001
-bash scripts/local.sh scripts/evaluate.py --manifest data/manifests/phone/scene-002.json --run outputs/scene002_multi_001
+bash scripts/local.sh scripts/run_baseline.py --manifest data/manifests/phone/scene-021.json --mode multi --output outputs/scene002_multi_001
+bash scripts/local.sh scripts/evaluate.py --manifest data/manifests/phone/scene-021.json --run outputs/scene002_multi_001
 ```
 
 `single` 只输入参考图；`multi` 输入清单中全部图片，但仍评估同一参考图上的同一对点。当前不对三张图片分别评分。

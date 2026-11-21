@@ -7,3 +7,9 @@ data/raw/
 data/processed/
 checkpoints/
 outputs/
+
+# Local model caches
+.cache/
+
+# Generated annotation previews
+data/annotations/graspnet/previews/
