@@ -10,7 +10,7 @@ from scipy.io import loadmat
 from scipy.ndimage import binary_erosion
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-from close_range.common import ROOT, save, sha
+from close_range.common import ROOT, save, sha, portable_path
 from mapanything.utils.cropping import crop_resize_if_necessary
 from mapanything.utils.image import find_closest_aspect_ratio
 
@@ -133,9 +133,9 @@ def prepare_scene(args):
         views.append(
             dict(
                 id=f"view_{i+1:03d}",
-                image=str(dest),
+                image=portable_path(dest),
                 sha256=sha(dest),
-                original=str(path),
+                original=portable_path(path),
                 frame=frame,
             )
         )
@@ -148,8 +148,8 @@ def prepare_scene(args):
             coordinate_space="model_input_pixels_xy",
             pairs=pairs,
             sensor_reference=dict(
-                depth=str(raw / "depth" / f"{reference}.png"),
-                meta=str(raw / "meta" / f"{reference}.mat"),
+                depth=portable_path(raw / "depth" / f"{reference}.png"),
+                meta=portable_path(raw / "meta" / f"{reference}.mat"),
                 factor_depth=factor,
             ),
             note="Sensor-derived labels, not independent tape measurements. Interior mask is only a basic quality filter.",
@@ -166,7 +166,7 @@ def prepare_scene(args):
             views=views,
             reference_index=0,
             model_size=list(size),
-            annotation=str(ann),
+            annotation=portable_path(ann),
             preprocessing="Upstream crop/resize; nearest source-pixel mapping for sensor labels",
             seed=args.seed,
         ),

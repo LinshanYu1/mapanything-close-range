@@ -3,13 +3,18 @@
 __pycache__/
 *.py[cod]
 .DS_Store
-data/raw/
-data/processed/
-checkpoints/
-outputs/
-
-# Local model caches
 .cache/
 
-# Generated annotation previews
-data/annotations/graspnet/previews/
+# Datasets and generated predictions remain local.
+/data/
+/outputs/
+# Share only inference weights/configs for trained variants.
+/checkpoints/*
+!/checkpoints/graspnet_A/
+!/checkpoints/graspnet_B/
+!/checkpoints/graspnet_AB/
+/checkpoints/graspnet_*/*
+!/checkpoints/graspnet_*/model.pt
+!/checkpoints/graspnet_*/model_best.pt
+!/checkpoints/graspnet_*/model_config.json
+!/checkpoints/graspnet_*/training_config.json

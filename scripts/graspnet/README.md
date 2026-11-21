@@ -1,103 +1,252 @@
 # GraspNet 下载与预处理
 
-在项目根目录运行。官方来源：https://graspnet.net/datasets.html
+本文先介绍每个脚本的作用和用法，再说明完整处理顺序与完成标准。所有命令均在项目根目录执行，使用 `bash scripts/local.sh` 选择项目 Python 环境。
 
-## 1. 下载
+官方数据说明：[GraspNet 数据集](https://graspnet.net/datasets.html)。
+
+## 1. 每个脚本做什么、怎么用
+
+| 脚本 | 作用 |
+| --- | --- |
+| `download.py` | 下载一个官方训练包，提取指定场景和相机 |
+| `download_all.py` | 下载并解压全部 7 个官方场景包 |
+| `download_mirror.py` | 从第三方镜像下载完整场景数据，校验并解压 |
+| `prepare.py` | 把原始数据转换成模型输入图片、点对距离标签和清单 |
+| `../predict_directory.py` | 通用脚本：批量检查输入，或执行模型预测和距离评估 |
+
+三个 download 脚本是不同下载入口，选择一个即可，不需要全部运行。“全部下载”指场景数据，不包含网站上其他独立资源，例如物体模型和抓取标注包。
+
+### 1.1 download.py：一个官方训练包
+
+适合先试少量场景，或已经手动下载了 ZIP。运行环境需要 `gdown`。
+
 
 ```bash
+# 从 train_1 提取一个场景，默认使用 RealSense
 bash scripts/local.sh scripts/graspnet/download.py --pack train_1 --scenes scene_0017
-```
 
-需要当前 Python 环境安装 `gdown`。官方训练包约 6.3–20 GB；脚本下载完整 ZIP，然后只解压指定场景和相机的数据，并非按场景联网下载。默认 RealSense，可用 `--camera kinect`。Google Drive 可能限流；可以通过官方网站其他镜像手动下载，再执行：
-
-```bash
-bash scripts/local.sh scripts/graspnet/download.py --archive /absolute/path/train_1.zip --scenes scene_0017
-```
-
-输出 `data/raw/graspnet/scenes/scene_0017/realsense/`，保留 RGB、depth、label、meta 和相机参数。拒绝覆盖已有文件。下载可以续传，解压中断后的部分文件需自行检查并移走后重试。指定场景必须存在于所选包内，脚本会检查。
-
-不传 `--scenes` 时，提取所选 ZIP 内所有场景（不是自动下载全部训练包）：
-
-```bash
+# 提取 train_1 中全部场景
 bash scripts/local.sh scripts/graspnet/download.py --pack train_1
+
+# 已经有 ZIP：跳过网络下载
+bash scripts/local.sh scripts/graspnet/download.py --archive data/raw/graspnet/archives/train_1.zip --scenes scene_0017
 ```
 
-## 2. 预处理
+`--pack` 支持 `train_1` 至 `train_4`。`--camera kinect` 可改选 Kinect。指定场景只减少解压量，仍需下载整个 ZIP。此脚本拒绝覆盖已有文件，解压中断后重跑可能需要先检查已有输出。
 
-默认扫描 `data/raw/graspnet/scenes/` 下所有非隐藏场景目录：
+
+### 1.2 download_all.py：全部官方场景包
+
 
 ```bash
-bash scripts/local.sh scripts/graspnet/prepare.py
+bash scripts/local.sh scripts/graspnet/download_all.py
 ```
 
-自定义根目录也可扫描；传入的根目录必须直接包含 scene_XXXX 文件夹：
+需要 `gdown`，默认同时下载两个包；减少并行数：
 
 ```bash
-bash scripts/local.sh scripts/graspnet/prepare.py --raw-root /absolute/path/scenes
+bash scripts/local.sh scripts/graspnet/download_all.py --workers 1
 ```
 
-传 `--scene` 则只处理该场景：
+仅下载、检查 ZIP，不解压：
 
 ```bash
-bash scripts/local.sh scripts/graspnet/prepare.py --scene scene_0017 --frames 0000 0012 0024 --pairs 10
+bash scripts/local.sh scripts/graspnet/download_all.py --download-only
 ```
 
-首张图作为参考图。默认随机种子 0，自动选择不同物体内部的 10 对点；过滤背景、无效深度和分割边缘。按 meta 中 factor_depth 转换为米，使用 intrinsic_matrix 反投影后计算三维直线距离。图片采用上游缩放裁剪，另用最近邻源像素映射生成对应标签；存在像素采样精度限制。
+仅下载完成后，再运行不带 `--download-only` 的命令才能解压。压缩包在 `data/raw/graspnet/archives/`，进度在 `data/raw/graspnet/download_status.json`。正常结束会显示 `All seven scene archives complete.`。使用 `--download-only` 时，这句话不代表场景已经解压。
 
-输出：
-- `data/processed/graspnet/<组名>/`：纯 RGB 模型输入。
-- `data/annotations/graspnet/<组名>.json`：点坐标、距离和来源记录。
-- `data/annotations/graspnet/previews/<组名>/`：每一对点的预览，请检查。
-- `data/manifests/graspnet/<组名>.json`：统一输入清单。
+Google Drive 可能因下载配额报错；此时可改用 mirror。解压保留官方包目录结构，预处理前确认场景实际位于 `data/raw/graspnet/scenes/`。此脚本不生成 mirror 的 `scene_inventory.json`。
 
-默认组名 `scene_0017_realsense_pilot`；可用 `--name` 新建其他组，不覆盖已有结果。清单含绝对路径，移动数据后需重新生成。标签来自传感器，不是尺量真值；基本过滤不能保证反光表面等区域的深度准确。只有参考图有点对标签，不执行跨视图点跟踪。一个场景的不同组必须进入同一个训练/验证/测试划分。
 
-复用本机已有旧数据，无须下载：
+### 1.3 download_mirror.py：完整场景镜像（当前方式）
+
 
 ```bash
-bash scripts/local.sh scripts/graspnet/prepare.py --raw-root /Users/linshanyu/Desktop/dl-project/data/graspnet_audit --scene scene_0017 --frames 0000 0012 0024 --pairs 10
+bash scripts/local.sh scripts/graspnet/download_mirror.py
 ```
 
-## 3. 预测和评估
+来源为 `DravenALG/GraspNet-1Billion`。脚本记录本次下载版本，下载约 142.5 GB 的 TAR；磁盘还需要容纳解压后的文件。运行环境需安装 `huggingface_hub`。
+
+脚本依次执行下载、文件哈希校验、解压、场景文件完整性检查，不需要再手动解压。输出：
+
+- `data/raw/graspnet/archives/mirror/scenes.tar`：压缩包。
+- `data/raw/graspnet/scenes/`：解压后的场景。
+- `data/raw/graspnet/mirror_status.json`：阶段与校验记录。
+- `data/raw/graspnet/scene_inventory.json`：场景与相机文件数量清单。
+
+成功时 `mirror_status.json` 中 `state` 为 `complete`、`sha256_verified` 为 `true`、`scenes` 为 190、`rgb_images` 为 97280。清单应有 380 条记录（190 个场景 × 2 种相机），每条的 RGB、depth、label、meta 各 256 个文件。
+
+注意：哈希核对的是镜像提供的校验值，不是官方独立校验值。当前下载依赖 Hugging Face 缓存机制，中断后重跑不保证从断点继续，可能重新下载。状态文件记录的是上次写入状态，不能仅凭 `downloading` 判断进程仍在运行。已有解压文件只检查大小后跳过，不逐个重新校验内容。
+
+
+### 1.4 prepare.py：生成模型输入与距离标签
+
+
+原始数据应该类似：
+
+```text
+data/raw/graspnet/scenes/
+└── scene_0000/
+    ├── realsense/
+    │   ├── rgb/0000.png
+    │   ├── depth/0000.png
+    │   ├── label/0000.png
+    │   └── meta/0000.mat
+    └── kinect/
+        └── ...
+```
+
+先处理一个场景，确认成功后再处理全部：
 
 ```bash
+bash scripts/local.sh scripts/graspnet/prepare.py --scene scene_0000 --frames 0000 0012 0024 0036 0048 --pairs 10
+
+bash scripts/local.sh scripts/graspnet/prepare.py --frames 0000 0012 0024 0036 0048 --pairs 10
+```
+
+不传 `--scene` 就扫描原始目录下的所有场景。上面每个场景选 5 张图片、生成 10 对距离标签；默认相机为 RealSense。省略 `--frames` 时只有 `0000 0012 0024` 三张，不是全部 256 张。要处理 Kinect，增加 `--camera kinect`。
+
+预处理具体做了这些事：
+
+1. 读取选定帧的 RGB、深度、物体分割标签和相机参数。
+2. 将 RGB 按模型要求缩放、裁剪，保存不带标记的模型输入图片。
+3. 在第一张参考图中自动选择不同物体内部的 A/B 点，过滤背景、无效深度和部分边缘点。
+4. 用深度和相机内参还原两个点的三维位置，计算直线距离，标签单位为米。
+5. 保存点坐标、距离、预览图，以及描述模型输入的 manifest 清单。
+
+例如 `scene_0000` 会生成：
+
+```text
+data/
+├── processed/graspnet/scene_0000_realsense_pilot/  # 模型输入 RGB
+├── annotations/graspnet/scene_0000_realsense_pilot.json  # 点对与距离
+├── annotations/graspnet/previews/scene_0000_realsense_pilot/  # A/B 预览
+└── manifests/graspnet/scene_0000_realsense_pilot.json  # 输入清单
+```
+
+真实深度只用于生成监督标签；这里的 RGB baseline 推理不把真实深度交给模型。点对标签属于参考图，脚本不会自动标注同一物理点在所有视角的位置。
+
+若显示 `skipped existing group`，表示复用已有结果，不代表按新的帧数或参数重新处理。更换设置时，可指定单场景和新的组名，例如：
+
+```bash
+bash scripts/local.sh scripts/graspnet/prepare.py --scene scene_0000 --name scene_0000_realsense_5views --frames 0000 0012 0024 0036 0048 --pairs 10
+```
+
+不要把同一场景的多个组当成独立场景划入不同数据集。新生成的 manifest 使用项目相对路径；复制完整项目和数据后仍可读取。项目外数据的相对目录关系需要保持。
+
+
+补充参数：`--raw-root` 指定直接包含 `scene_XXXX` 的原始目录；`--data-root` 指定输出数据根目录；`--seed` 控制选点随机种子，默认 0。`--name` 只能和 `--scene` 一起使用。部分输出已存在时会报错；单个场景失败后继续其他场景，最后以非零退出码提示失败。
+
+### 1.5 predict_directory.py：检查或预测
+
+这个通用脚本位于 `scripts/` 下，遍历 `--input` 中每个场景目录；一张图片采用单图模式，多张采用多图模式。
+
+```bash
+# 只检查模型输入，不加载模型权重
 bash scripts/local.sh scripts/predict_directory.py --input data/processed/graspnet --check-only
+
+# 实际执行 baseline，有标签时计算测距误差
 bash scripts/local.sh scripts/predict_directory.py --input data/processed/graspnet
 ```
 
-遍历此目录全部场景组（含以前导入的组），每组单图或多图自动判断，有标签则自动评估。模型只读取 RGB，不接收真实深度或相机参数。检查与预测分别生成新的输出目录。
+默认查找 `data/manifests/graspnet/` 下的清单。自定义数据位置时，可以通过 `--manifests-dir` 指定清单目录，通过 `--output` 指定新的结果目录。每次检查或预测均生成结果汇总 `summary.csv`，终端会打印路径。各状态的判断方法见第 2 节。
 
-`import_legacy.py` 仍用于导入旧的已处理 pilot，与新 `prepare.py` 是不同入口。
+## 2. 整个处理过程：按这个顺序执行
 
-默认每个场景选择 0000、0012、0024 三个视角，并非全部 256 张；用 --frames 可修改，所有场景使用同一组帧编号。已有 processed 目录、标注和清单时跳过，不自动检查原数据变更；部分输出存在时报告失败。单场景失败不阻断其他场景，最终返回非零退出码。--name 只能与 --scene 一起使用，换参数重新生成时应换组名。
+```text
+选择一个下载脚本
+    ↓
+data/raw/graspnet/scenes/（RGB、深度、分割、相机参数）
+    ↓ prepare.py
+data/processed + data/annotations + data/manifests
+    ↓ predict_directory.py --check-only + 标注预览抽查
+确认数据准备完成
+    ↓
+按原始场景划分训练/验证/测试集，开始训练
+```
 
-## 4. 简单验证方法与本次结果（2026-10-31）
+### 2.1 下载并确认原始文件完整
 
-本节验证的是“本地 GraspNet 数据能处理成模型可加载的输入”。不下载整个官方包、不加载模型权重，也不评价测距精度。
-
-已有标准 raw 数据时，在项目根目录运行：
+当前采用 mirror：
 
 ```bash
-bash scripts/local.sh scripts/graspnet/prepare.py
+bash scripts/local.sh scripts/graspnet/download_mirror.py
+```
+
+如果已经下载、解压成功，不需要重跑。确认 `mirror_status.json` 为 `complete`，并且 `scene_inventory.json` 记录了 190 个场景、两种相机的数据。具体输出和限制见 1.3。
+
+### 2.2 先处理一个场景，再处理全部场景
+
+```bash
+bash scripts/local.sh scripts/graspnet/prepare.py --scene scene_0000 --frames 0000 0012 0024 0036 0048 --pairs 10
+
+bash scripts/local.sh scripts/graspnet/prepare.py --frames 0000 0012 0024 0036 0048 --pairs 10
+```
+
+确认生成了图片、标注、预览和清单。第二条命令扫描全部原始场景，已经成功生成的同名组会跳过。如果以前用三帧生成过同名组，它不会自动变成五帧；重新生成方法见 1.4。
+
+### 2.3 检查输入、标注与预测结果
+
+
+**第一步：批量检查模型输入。**
+
+```bash
 bash scripts/local.sh scripts/predict_directory.py --input data/processed/graspnet --check-only
 ```
 
-若第一步跳过已有组，只代表复用输出；重新验证预处理请使用新的输出数据目录。以下是本机利用旧项目数据进行隔离验证的命令（再次执行时更换临时目录名称）：
+它逐组读取图片，按图片数量选择单图或多图输入方式，执行模型输入准备，但不加载模型权重、不执行预测。已有 manifest 时会核对图片清单，并检查输入图片等信息。
+
+成功的组会显示 `checked`。终端最后打印 `summary.csv` 路径，打开这个文件检查：
+
+- 每个预期场景组都有一行，而不是只检查了少数已有组。
+- `status` 全部为 `checked`，没有 `failed`。
+- `image_count` 与预期一致，例如上面命令的新组应为 5。
+- 出现失败时查看 `error` 列，修复对应数据后重新检查。
+
+**第二步：检查标注与预览。**
+
+`check-only` 即使没有标注也可以检查图片，因此它不能单独证明训练数据已经完整。还要确认每组都有对应的 annotation JSON 和 manifest；打开若干场景的预览图，确认 A/B 点落在物体表面，而不是背景或明显错误区域。检查标签中的点坐标在图片范围内、距离为有限正数，点对数量符合设置。
+
+GraspNet 标签来自传感器深度，不是手工尺量。自动过滤只能降低错误风险，不能保证所有深度标签都准确。
+
+**可选第三步：实际跑 baseline。**
 
 ```bash
-bash scripts/local.sh scripts/graspnet/prepare.py --raw-root /Users/linshanyu/Desktop/dl-project/data/graspnet_audit --data-root /private/tmp/graspnet-my-check --pairs 10
-
-bash scripts/local.sh scripts/predict_directory.py --input /private/tmp/graspnet-my-check/processed/graspnet --manifests-dir /private/tmp/graspnet-my-check/manifests/graspnet --check-only --output /private/tmp/graspnet-my-check/input-check
+bash scripts/local.sh scripts/predict_directory.py --input data/processed/graspnet
 ```
 
-检查方法：
+这会遍历该目录全部组，加载模型并预测，有标签则计算距离误差，耗时明显长于 check。成功预测并评估的状态为 `evaluated`；`predicted_without_labels` 表示没有完成距离评估，`evaluation_failed` 表示预测后评估失败。模型误差大不直接等于预处理失败，需要另外排查标签与模型预测。
 
-1. 预处理终端应显示生成的视图数、点对数及清单路径。
-2. 查看 `annotations/graspnet/previews/<组名>/` 的 A/B 点预览，确认点落在预期物体表面。自动选点与深度过滤不等于人工确认无误。
-3. 批量检查应显示 `checked`；查看其输出目录的 `summary.csv`，失败时读取 error 列。
 
-本次实测：默认扫描本地根目录，发现 scene_0017，使用 RealSense 的 0000、0012、0024 三帧重新生成数据；3 张 RGB PNG 均为 518×294。实际推理入口的 `prepare_inputs` 和官方 `load_images` 均成功读取。额外检查了 10 对标签距离均为正且有限、A/B 坐标位于图片范围内，并确认生成了 10 张预览。批量输入状态为 `checked`。
+### 2.4 怎样才算准备完成
 
-本次检查记录：`/private/tmp/data-branches-20261031-ey588qfi/graspnet_check/summary.csv`。临时目录可能被系统清理，复验时使用上述命令生成新记录。
+
+满足以下条件，才算本轮计划使用的数据已准备完成：
+
+- **原始数据完整**：下载与解压成功；完整 mirror 应有 190 个场景及对应清单，不能只看压缩包存在。
+- **预处理齐全**：计划使用的每个场景组都有 RGB、annotation、manifest 和点对预览。只处理部分场景时，应明确本轮范围。
+- **输入检查通过**：预期的全部组都出现在 `summary.csv` 中，状态为 `checked`，图片数量正确。
+- **标签抽查通过**：点位合理、坐标在图内、距离有效、标签数量正确。check-only 不能替代这一步。
+
+如果以上都通过，就可以认为“下载和前期处理完成”，下一步是划分训练集、验证集和测试集并开始训练。同一原始场景的不同相机、视角和处理组必须放入同一划分，避免泄漏；数据全部下载下来不等于全部用于训练。
+
+
+## 3. 历史验证记录（2026-10-31）
+
+以下为历史单场景验证，不代表当前完整数据已经逐一通过检查。本次实测：默认扫描本地根目录，发现 scene_0017，使用 RealSense 的 0000、0012、0024 三帧重新生成数据；3 张 RGB PNG 均为 518×294。实际推理入口的 `prepare_inputs` 和官方 `load_images` 均成功读取。额外检查了 10 对标签距离均为正且有限、A/B 坐标位于图片范围内，并确认生成了 10 张预览。批量输入状态为 `checked`。
+
 
 范围说明：本次没有实际测试官方网络下载，没有执行模型推理，没有人工逐张审核点位，也没有独立验证传感器距离的准确度。
+
+## 预处理完成后生成固定划分
+
+```bash
+bash scripts/local.sh scripts/graspnet/make_split.py
+```
+
+只执行一次，已有划分不会覆盖。要求 190 个原始场景的处理清单齐全，旧 pilot 排除。
+官方 0–99 场景划为 80 个训练、20 个验证；100–189 的 90 个场景留作测试。
+已用于开发的 0000、0017 固定在验证集，其余按种子 443 划分。同一原始场景的所有组进入同一集合。
+生成 configs/graspnet_split.json，A/B/AB 共用。若其他测试场景也已用于调参，正式实验前应调整测试范围并记录。
+PyCharm 必须选择本项目 .venv/bin/python（Python 3.12），而非此前外部的 Python 3.14 环境。

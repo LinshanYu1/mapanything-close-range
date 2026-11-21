@@ -1,0 +1,3247 @@
+{
+  "variant": "A",
+  "learning_rate": 0.0005,
+  "consistency_weight": 0.0,
+  "seed": 443,
+  "pretrained_revision": "a1d87e9086706fb9974f3be5a3e3a0ca5401c5aa",
+  "train_signature": "c4466945b01af03a2ca3450d0b999df4111261a37d02adb7b3ab5ca77d08b741",
+  "val_signature": "ecbb356c5d2b4a6b1477b7a51d2647539434c45d25e11ef824e5a09a63375b7c",
+  "target_epochs": 50,
+  "device": "mps",
+  "optimizer": "AdamW",
+  "weight_decay": 0,
+  "gradient_clip_norm": 1.0,
+  "scene_batch_size": 1,
+  "model_mode": "eval_with_gradients",
+  "pretrained_model": "facebook/map-anything",
+  "module_hidden_dim": 128,
+  "resume_from": null,
+  "train_data": {
+    "seed": 443,
+    "training": true,
+    "use_consistency": true,
+    "scenes": [
+      {
+        "scene_id": "scene_0001_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0001_realsense_pilot/view_001.png",
+            "sha256": "2831a6e74b45a3d21c0366b6a1ac6c5f679e3f126d2829426d75d1b04069fb0d",
+            "original": "data/raw/graspnet/scenes/scene_0001/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0001_realsense_pilot/view_002.png",
+            "sha256": "ffc78730ca158218b46f7dae7bfa17c13e9d2ff2341bbaf82e8e9a101430167f",
+            "original": "data/raw/graspnet/scenes/scene_0001/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0001_realsense_pilot/view_003.png",
+            "sha256": "81dc8e14aa0461e46216167c976c907b53e1175ab8891774ef1dd3655b7613f1",
+            "original": "data/raw/graspnet/scenes/scene_0001/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0002_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0002_realsense_pilot/view_001.png",
+            "sha256": "2debf5063f07fb63fd0f3947fa0cb68d5d9a81319feb21dd75f35801212b5841",
+            "original": "data/raw/graspnet/scenes/scene_0002/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0002_realsense_pilot/view_002.png",
+            "sha256": "7a5f8adcc87a985f27d17137ec9772c129877cb573d9bf77b2d06b86ed3c5225",
+            "original": "data/raw/graspnet/scenes/scene_0002/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0002_realsense_pilot/view_003.png",
+            "sha256": "199763405279d6cba9b4bf933551b2f0251fdeba5f254b232b13ad7903178aac",
+            "original": "data/raw/graspnet/scenes/scene_0002/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0003_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0003_realsense_pilot/view_001.png",
+            "sha256": "6a6b56678a977bb195c8111cb55143104ff0de6f882f169d7a0509caff429833",
+            "original": "data/raw/graspnet/scenes/scene_0003/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0003_realsense_pilot/view_002.png",
+            "sha256": "abf05008159b9f67cd5896b4bda4b13f3421e24573410f450a30123add27e5d6",
+            "original": "data/raw/graspnet/scenes/scene_0003/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0003_realsense_pilot/view_003.png",
+            "sha256": "b0201ecfb788b82bb165aaf73facb038a8629780854292c5d26efe989584272a",
+            "original": "data/raw/graspnet/scenes/scene_0003/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0004_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0004_realsense_pilot/view_001.png",
+            "sha256": "4e3e192b70c9e2e7a45521f5777dce15e3d0234fa84f05f776945d1cea73a038",
+            "original": "data/raw/graspnet/scenes/scene_0004/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0004_realsense_pilot/view_002.png",
+            "sha256": "6212c2024a420ee3a6ad27cf39660d9ff0398c539ca41738a676a524683fa57d",
+            "original": "data/raw/graspnet/scenes/scene_0004/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0004_realsense_pilot/view_003.png",
+            "sha256": "922a1d8e93bb6a90e5883b22f9fca78125bc5afd749b791280903fa137336253",
+            "original": "data/raw/graspnet/scenes/scene_0004/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0006_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0006_realsense_pilot/view_001.png",
+            "sha256": "45d1d6ddfcdb4e07320ec391ffb0a48c546befa07d5f46211eb56d56bf85753f",
+            "original": "data/raw/graspnet/scenes/scene_0006/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0006_realsense_pilot/view_002.png",
+            "sha256": "b3686f55e03a6e40c5b4111ddcc24c1c44401f8e77597ad06d87c8f498c6b3d9",
+            "original": "data/raw/graspnet/scenes/scene_0006/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0006_realsense_pilot/view_003.png",
+            "sha256": "6c7b17f056b3a8f279187b54b8a5b2f545f59df27d69b7e66766fcef1fabf683",
+            "original": "data/raw/graspnet/scenes/scene_0006/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0007_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0007_realsense_pilot/view_001.png",
+            "sha256": "bba1b17b938495fe529cd1904e94a90697fd09e03c91f3b77a45c9bbb73bab5c",
+            "original": "data/raw/graspnet/scenes/scene_0007/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0007_realsense_pilot/view_002.png",
+            "sha256": "a30d24b1042aed0a205dd25b87f447442bf17a273d1491fe99e1f69eddaaef39",
+            "original": "data/raw/graspnet/scenes/scene_0007/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0007_realsense_pilot/view_003.png",
+            "sha256": "4a501c5747637aea19f56c324e0df03ccf79bb3dc2ae5de9162e780afd597177",
+            "original": "data/raw/graspnet/scenes/scene_0007/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0009_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0009_realsense_pilot/view_001.png",
+            "sha256": "dbfda8ca167aa49f945f203a7cf5f119befbab61d9cb5252e43655d0661739f0",
+            "original": "data/raw/graspnet/scenes/scene_0009/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0009_realsense_pilot/view_002.png",
+            "sha256": "03e4b0d1c67cb0c872f27aee7edef372791e96827dc50e83123adc1167d6232c",
+            "original": "data/raw/graspnet/scenes/scene_0009/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0009_realsense_pilot/view_003.png",
+            "sha256": "d13a37a3683e22c3b1a15e2a6b8c2e89950412334202220085da02cddee85a15",
+            "original": "data/raw/graspnet/scenes/scene_0009/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0010_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0010_realsense_pilot/view_001.png",
+            "sha256": "adf65767c44fd0952b6bbb61244e20c85d7572b1f0c8288d5cc557baff88e02b",
+            "original": "data/raw/graspnet/scenes/scene_0010/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0010_realsense_pilot/view_002.png",
+            "sha256": "d57fe951d8a687520f8d93816ce2a0fd97c6dbf047199c555505fc6425349384",
+            "original": "data/raw/graspnet/scenes/scene_0010/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0010_realsense_pilot/view_003.png",
+            "sha256": "7ecbb2e16ac0a85025f9975abee308bca1904fb3aae000354bdedd883faf02da",
+            "original": "data/raw/graspnet/scenes/scene_0010/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0012_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0012_realsense_pilot/view_001.png",
+            "sha256": "d746ccec8f89f57d4042f635c95f758c2d523624df89db41e4dc07e9d9308897",
+            "original": "data/raw/graspnet/scenes/scene_0012/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0012_realsense_pilot/view_002.png",
+            "sha256": "09cdfdad4f18ff7280b0dcf31c664c30428fe9f91614b1ea77e5b71467c65deb",
+            "original": "data/raw/graspnet/scenes/scene_0012/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0012_realsense_pilot/view_003.png",
+            "sha256": "d14ff10150281cfc378ac0f10e9415ce11e5e4cba7a7dc7bceb7f813d8fd3efb",
+            "original": "data/raw/graspnet/scenes/scene_0012/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0013_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0013_realsense_pilot/view_001.png",
+            "sha256": "391b711db081830c3d4e765a408143adee36c3d099575f25e0f4836b2e3c9b47",
+            "original": "data/raw/graspnet/scenes/scene_0013/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0013_realsense_pilot/view_002.png",
+            "sha256": "c4da37c3fe7b43dec3f9886cae88c32b358fefc58e25f5f9f543cbd096a377f1",
+            "original": "data/raw/graspnet/scenes/scene_0013/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0013_realsense_pilot/view_003.png",
+            "sha256": "883d6da17fcc08c7a0fdcf4379ec2147aa374b5a8238dcfaa0c47e6776d5d0e2",
+            "original": "data/raw/graspnet/scenes/scene_0013/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0014_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0014_realsense_pilot/view_001.png",
+            "sha256": "ef55a9666eb37f6b94554ed07560748811b99bdc03993aa10b00c38788710415",
+            "original": "data/raw/graspnet/scenes/scene_0014/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0014_realsense_pilot/view_002.png",
+            "sha256": "96a8f7062f24f0e2da13e0def02d086caaaddda185b586e8a437170b0ed4cade",
+            "original": "data/raw/graspnet/scenes/scene_0014/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0014_realsense_pilot/view_003.png",
+            "sha256": "4eba56a0127b1ca5176e5a79e124758d937b9ea6612f339af8e6a7319e21b0f2",
+            "original": "data/raw/graspnet/scenes/scene_0014/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0015_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0015_realsense_pilot/view_001.png",
+            "sha256": "8a8524ae1bb20a8b42959ef215eced63f336f3dafb9f0c3dfabb829cd6decc30",
+            "original": "data/raw/graspnet/scenes/scene_0015/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0015_realsense_pilot/view_002.png",
+            "sha256": "2f31d1e0ea1c0e3fdb57c8b428ac750d4f94dceb00a88e47e8b076fc27586f20",
+            "original": "data/raw/graspnet/scenes/scene_0015/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0015_realsense_pilot/view_003.png",
+            "sha256": "b620207e7aea4b47a6dc259bc72ac06beba2b0007fe48e580d85f6b2b97d307d",
+            "original": "data/raw/graspnet/scenes/scene_0015/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0016_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0016_realsense_pilot/view_001.png",
+            "sha256": "3420b20972cec2c7af7a4f30f2b3615d4fe490f36faad5edad55c128b548313d",
+            "original": "data/raw/graspnet/scenes/scene_0016/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0016_realsense_pilot/view_002.png",
+            "sha256": "91602dcc3fdb802e53affb425b16ffbba10b567dcafb90e05dd8bc7a31f6a1dd",
+            "original": "data/raw/graspnet/scenes/scene_0016/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0016_realsense_pilot/view_003.png",
+            "sha256": "0f62b3e22c76ce8672209ec2917082f1e169012ac8203a6b8713852945db5500",
+            "original": "data/raw/graspnet/scenes/scene_0016/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0018_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0018_realsense_pilot/view_001.png",
+            "sha256": "7e6570d630eb45cfd70c7b3e78fec06f7fe8ea0a81d358e97d392385e74f8460",
+            "original": "data/raw/graspnet/scenes/scene_0018/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0018_realsense_pilot/view_002.png",
+            "sha256": "e8673514a507b0d955f72fcd585e4b27285cd005a27bee0f5bbce27d07b05ddc",
+            "original": "data/raw/graspnet/scenes/scene_0018/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0018_realsense_pilot/view_003.png",
+            "sha256": "549c2861c21d15166f726f848322b9ec065748b71fe1039cd657c6448112a3bc",
+            "original": "data/raw/graspnet/scenes/scene_0018/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0020_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0020_realsense_pilot/view_001.png",
+            "sha256": "6eab6f50103237b9976376fb354a0a2a95be4d74014910f307de71782bb84e03",
+            "original": "data/raw/graspnet/scenes/scene_0020/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0020_realsense_pilot/view_002.png",
+            "sha256": "a2827b1f44439a89d7cca30f94182a0494081f11604c56ec2b8a926a5351a64d",
+            "original": "data/raw/graspnet/scenes/scene_0020/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0020_realsense_pilot/view_003.png",
+            "sha256": "758a00777106c1d9856ac7a6c1acbfe248624270633fcacdc8aac69b5d507863",
+            "original": "data/raw/graspnet/scenes/scene_0020/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0022_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0022_realsense_pilot/view_001.png",
+            "sha256": "8b8af1e8b5b62b72775c01907eac06323cec7c64fd156ec894c0fb8511c7630e",
+            "original": "data/raw/graspnet/scenes/scene_0022/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0022_realsense_pilot/view_002.png",
+            "sha256": "af1f099abd50e34ff8177fcbd17f9465fb8946892b4483c1f943f4ffbd13f40d",
+            "original": "data/raw/graspnet/scenes/scene_0022/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0022_realsense_pilot/view_003.png",
+            "sha256": "20175395675b55c19f370e9defba92311754bfb4292153f4807a0c4c3a297d3f",
+            "original": "data/raw/graspnet/scenes/scene_0022/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0023_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0023_realsense_pilot/view_001.png",
+            "sha256": "3cc201a0c88df11bbb239c51dab7788deb1556bb5bf8b24d5798d9a07cd038f7",
+            "original": "data/raw/graspnet/scenes/scene_0023/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0023_realsense_pilot/view_002.png",
+            "sha256": "5c482811052ca9aa4d57fd64cac6b7b19e9371f7559bd5ec3912946c69aeafb4",
+            "original": "data/raw/graspnet/scenes/scene_0023/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0023_realsense_pilot/view_003.png",
+            "sha256": "1354b13000ccd7ed4bd4595f9cf804a2f725524ba108fbb29b3be1d8c52dc31f",
+            "original": "data/raw/graspnet/scenes/scene_0023/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0024_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0024_realsense_pilot/view_001.png",
+            "sha256": "d59c88dca84d9899d3f6a9e5f00971438d1e34b732e7f7655a379a1a4948ebf1",
+            "original": "data/raw/graspnet/scenes/scene_0024/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0024_realsense_pilot/view_002.png",
+            "sha256": "91fdcc0eebbeb63cfb6b390a4143063acc15b4ad40168dd51fe4b2adbbac09df",
+            "original": "data/raw/graspnet/scenes/scene_0024/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0024_realsense_pilot/view_003.png",
+            "sha256": "9a9b3895735fcdfe872f287076dcac85bad3f7df45ea47e87b5feeea050edefb",
+            "original": "data/raw/graspnet/scenes/scene_0024/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0025_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0025_realsense_pilot/view_001.png",
+            "sha256": "c00e2e5cad1e1ca24ec429e9a1ebc172157a19d92cc1f0cf8b36d8bf6f8f04da",
+            "original": "data/raw/graspnet/scenes/scene_0025/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0025_realsense_pilot/view_002.png",
+            "sha256": "b30cd50ce316831e0421d0679fc6fbe702f6065eab563c5de8248b5aa0bf306d",
+            "original": "data/raw/graspnet/scenes/scene_0025/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0025_realsense_pilot/view_003.png",
+            "sha256": "1c8aac26e7ac6be55c86f36725870f4d64aee9161b3654246492071d9f592962",
+            "original": "data/raw/graspnet/scenes/scene_0025/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0026_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0026_realsense_pilot/view_001.png",
+            "sha256": "43d46de9037514d622578ea625f9c5d2577c1513aaf27bfe831c335c6b88fc7c",
+            "original": "data/raw/graspnet/scenes/scene_0026/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0026_realsense_pilot/view_002.png",
+            "sha256": "eff34b6e87e09c21166a64fd76bd93850724597f01ed1a53a66450aa46551cae",
+            "original": "data/raw/graspnet/scenes/scene_0026/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0026_realsense_pilot/view_003.png",
+            "sha256": "f2f32b1db7acbf61195825409f96cbf03af69839ac5e291075acc1a6ad421fbb",
+            "original": "data/raw/graspnet/scenes/scene_0026/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0027_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0027_realsense_pilot/view_001.png",
+            "sha256": "d5270e9a763a885681bcb74124dac6ff6f7b5f09c7a6156a72030293e29848a6",
+            "original": "data/raw/graspnet/scenes/scene_0027/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0027_realsense_pilot/view_002.png",
+            "sha256": "5f7cc2ad9569491641d89efd100d9e524daa14cc015cfe7b5b0364daa3ef39a8",
+            "original": "data/raw/graspnet/scenes/scene_0027/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0027_realsense_pilot/view_003.png",
+            "sha256": "8bef2c9a6a517b2be5b836bc426fb33c9f7e88bb1003d97d20010262c7a7c439",
+            "original": "data/raw/graspnet/scenes/scene_0027/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0028_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0028_realsense_pilot/view_001.png",
+            "sha256": "4ff807bf00ba850586e9dff2f60802fd0761f9fe533619aff2d4ecad01e24caf",
+            "original": "data/raw/graspnet/scenes/scene_0028/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0028_realsense_pilot/view_002.png",
+            "sha256": "b9d9d32b7bbf69cc7f8bb0ae0de39dc9c146531e70f533ae3179958c143cf831",
+            "original": "data/raw/graspnet/scenes/scene_0028/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0028_realsense_pilot/view_003.png",
+            "sha256": "1eafa7e47c693b2fdf3c8e12b919942290eb2286c8a896c964083df3e60a28bc",
+            "original": "data/raw/graspnet/scenes/scene_0028/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0029_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0029_realsense_pilot/view_001.png",
+            "sha256": "21e0538d3f6d1dfd2cf402098f2e4404c8442be70c8877bc1a6b38c5ce669a5c",
+            "original": "data/raw/graspnet/scenes/scene_0029/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0029_realsense_pilot/view_002.png",
+            "sha256": "00822b3954d5d900861240b3e02fc97e5bf05acf6d6be803748bef77f95819a5",
+            "original": "data/raw/graspnet/scenes/scene_0029/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0029_realsense_pilot/view_003.png",
+            "sha256": "03998aafb21b8ad00a2aed73e48738f66d7150051b979cd220e0870ea6767e9c",
+            "original": "data/raw/graspnet/scenes/scene_0029/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0030_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0030_realsense_pilot/view_001.png",
+            "sha256": "2f7686de8078f9a62c1ee6751b860878842a8f2cfe33c29ff8c83d149189d566",
+            "original": "data/raw/graspnet/scenes/scene_0030/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0030_realsense_pilot/view_002.png",
+            "sha256": "2c699ade76dc3340ab548181f1f2bc7d0ba418d3253e46fe61f68b4179fc1e95",
+            "original": "data/raw/graspnet/scenes/scene_0030/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0030_realsense_pilot/view_003.png",
+            "sha256": "8834bb4093f346f59a0a7f1d7e8c7cb0dec1511e3c3df206b9aee244d861a367",
+            "original": "data/raw/graspnet/scenes/scene_0030/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0031_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0031_realsense_pilot/view_001.png",
+            "sha256": "6255ed0b291de2801e27a71fd3ed431c51a9e125c6c4cb68ff4041d620899bf3",
+            "original": "data/raw/graspnet/scenes/scene_0031/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0031_realsense_pilot/view_002.png",
+            "sha256": "7f521c311f5c11506ee3a7532c2c98ca73d01ca5bcb3e9c37e017f8d3f48f784",
+            "original": "data/raw/graspnet/scenes/scene_0031/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0031_realsense_pilot/view_003.png",
+            "sha256": "ad85dbe36953db64d14633c7d4869ccf1de0ce6a2cdcc7165bb49d2cb5851b4f",
+            "original": "data/raw/graspnet/scenes/scene_0031/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0032_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0032_realsense_pilot/view_001.png",
+            "sha256": "0d9be5701b458563657d005a01ef5c186cd58c71c6e67f14ce8da1de97a1eecc",
+            "original": "data/raw/graspnet/scenes/scene_0032/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0032_realsense_pilot/view_002.png",
+            "sha256": "71493cd1b91e5250422113bc74da0b89a72fed7c6f01a768a58a8a2066690342",
+            "original": "data/raw/graspnet/scenes/scene_0032/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0032_realsense_pilot/view_003.png",
+            "sha256": "b03030a33b4d12b9f0f33b222b2bf4e7da99e8ccaf7dddd94c7d37d69280d1a3",
+            "original": "data/raw/graspnet/scenes/scene_0032/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0033_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0033_realsense_pilot/view_001.png",
+            "sha256": "f23f03baaf4cf3b1d77df6087de272f7e8720f3f854cb21366204b58922a95b6",
+            "original": "data/raw/graspnet/scenes/scene_0033/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0033_realsense_pilot/view_002.png",
+            "sha256": "03ea445aaae7c9130612e8eb20c5b7d2cbbf21180da4c3143b1dd7994ed540a2",
+            "original": "data/raw/graspnet/scenes/scene_0033/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0033_realsense_pilot/view_003.png",
+            "sha256": "ebfe420faaf63050cd28e6dd45fbdd8b796862cb4f97b6cbe9cf2b0eef69733c",
+            "original": "data/raw/graspnet/scenes/scene_0033/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0034_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0034_realsense_pilot/view_001.png",
+            "sha256": "9ce3ced5d4f4f7514ad988e0b57a816457d1a00beaa3bad0ebb998b58c09034a",
+            "original": "data/raw/graspnet/scenes/scene_0034/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0034_realsense_pilot/view_002.png",
+            "sha256": "c8262d9ac7a20955865a36eb6588a4aacfc08987f15987caf8251adbc1b12ae8",
+            "original": "data/raw/graspnet/scenes/scene_0034/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0034_realsense_pilot/view_003.png",
+            "sha256": "2fd4ba87aee7c3af7bce56b6ff4de9e3b77a78d2403488a7ce8116394d129130",
+            "original": "data/raw/graspnet/scenes/scene_0034/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0036_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0036_realsense_pilot/view_001.png",
+            "sha256": "b86b653d0bd8fac6299ca509d31c7b57e93023841d1206426e0f5a8c6a2b028d",
+            "original": "data/raw/graspnet/scenes/scene_0036/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0036_realsense_pilot/view_002.png",
+            "sha256": "dc2754c7dee80521ca1c1fabe5fb41b8764738365f322807932cf1875d10396c",
+            "original": "data/raw/graspnet/scenes/scene_0036/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0036_realsense_pilot/view_003.png",
+            "sha256": "88dfd0069f4562833e54ac40353615a31e9037c90ca98848690b2a8d4e4655a1",
+            "original": "data/raw/graspnet/scenes/scene_0036/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0037_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0037_realsense_pilot/view_001.png",
+            "sha256": "ed864140f3b969a875026a9189d990c97ec92cf1a5add29deab3fba3849bbf9e",
+            "original": "data/raw/graspnet/scenes/scene_0037/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0037_realsense_pilot/view_002.png",
+            "sha256": "86838c492e64dcef1c5d746fa5e454ff44c1aa5066ff7fb02dc6fd2f6a3da661",
+            "original": "data/raw/graspnet/scenes/scene_0037/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0037_realsense_pilot/view_003.png",
+            "sha256": "7755ab0aec304885bd474be28b0f6a8981493a2e5441f61547612f403134a9b2",
+            "original": "data/raw/graspnet/scenes/scene_0037/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0038_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0038_realsense_pilot/view_001.png",
+            "sha256": "e90c64b3cf187441ddd94d589ef8e82ebc62b3c101b11a3dc2000afcb80d4cc9",
+            "original": "data/raw/graspnet/scenes/scene_0038/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0038_realsense_pilot/view_002.png",
+            "sha256": "49ee32f5ba7d68989f4c57a56eb8f0bbd8187fc37e5439d425aadd41a82d4533",
+            "original": "data/raw/graspnet/scenes/scene_0038/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0038_realsense_pilot/view_003.png",
+            "sha256": "857e6e25171c61644044a3fce027215a00c1831e3359622ccf02ec2a843a3537",
+            "original": "data/raw/graspnet/scenes/scene_0038/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0039_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0039_realsense_pilot/view_001.png",
+            "sha256": "ffecb9110b647a9991323a7975ffc8270cd03c78430acc5287647f11e90b0fcf",
+            "original": "data/raw/graspnet/scenes/scene_0039/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0039_realsense_pilot/view_002.png",
+            "sha256": "2677ebb9a2b7834018e3bb39f052553c6c3d949f4578d19bdef36cf4f4f1bab3",
+            "original": "data/raw/graspnet/scenes/scene_0039/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0039_realsense_pilot/view_003.png",
+            "sha256": "31c41531de237fdc2317f0af531ad25637005761b803bdae96fa92cf72bed29e",
+            "original": "data/raw/graspnet/scenes/scene_0039/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0040_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0040_realsense_pilot/view_001.png",
+            "sha256": "2164a99e2dc9cd0a2704c0b2094fba7697c0d6b45009449d9396dbfd980ce084",
+            "original": "data/raw/graspnet/scenes/scene_0040/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0040_realsense_pilot/view_002.png",
+            "sha256": "99da2f3a60687d0096b5e2ea99073718e1150bb0e9acd282ce77003423824986",
+            "original": "data/raw/graspnet/scenes/scene_0040/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0040_realsense_pilot/view_003.png",
+            "sha256": "d37a7c0815bc78ceb9c61e7cfae3e116a58d22f1ab90e4b9bf8e31bffc329a4d",
+            "original": "data/raw/graspnet/scenes/scene_0040/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0041_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0041_realsense_pilot/view_001.png",
+            "sha256": "50314509da930a11d8696787cbfdae7e7515b23a3f2542523008be390ea4d9af",
+            "original": "data/raw/graspnet/scenes/scene_0041/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0041_realsense_pilot/view_002.png",
+            "sha256": "5cd244e074364b53cc1322d8c6a8a0d072a97268c7723fd4315bb334e4861cfa",
+            "original": "data/raw/graspnet/scenes/scene_0041/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0041_realsense_pilot/view_003.png",
+            "sha256": "77304c789adc167ae9a8e70a80c01b1d57b140287830d4755fe5a6811f3ba7af",
+            "original": "data/raw/graspnet/scenes/scene_0041/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0043_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0043_realsense_pilot/view_001.png",
+            "sha256": "1fbf18be24b4ff44c930da092dc66d9c26c0505bdbf1f2dfd1180b6385da62d3",
+            "original": "data/raw/graspnet/scenes/scene_0043/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0043_realsense_pilot/view_002.png",
+            "sha256": "8bba0a73ff829a2bb22d3a1cca822a6174340e8b7cd563df0cb5813af64a97fe",
+            "original": "data/raw/graspnet/scenes/scene_0043/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0043_realsense_pilot/view_003.png",
+            "sha256": "164e2421b2776f1ba08de4dddd87c60efc0cfd83ddc06c9235d0808d39f1b427",
+            "original": "data/raw/graspnet/scenes/scene_0043/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0044_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0044_realsense_pilot/view_001.png",
+            "sha256": "06516e15a7d0289eddb47576c6383b79741320a513a41b5509eb5867839eac91",
+            "original": "data/raw/graspnet/scenes/scene_0044/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0044_realsense_pilot/view_002.png",
+            "sha256": "80066c0836e6d8da21f41cfae30c4c48b1dbc24dab5d198200c36f1403cc0a1a",
+            "original": "data/raw/graspnet/scenes/scene_0044/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0044_realsense_pilot/view_003.png",
+            "sha256": "abaf2c4c3000ec29cae3fe123b568ae865b965711977d35588867d4329ec4ad4",
+            "original": "data/raw/graspnet/scenes/scene_0044/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0045_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0045_realsense_pilot/view_001.png",
+            "sha256": "888ae7615716eba87143c271fbde5920986b1395bbcad0a4755223836807691d",
+            "original": "data/raw/graspnet/scenes/scene_0045/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0045_realsense_pilot/view_002.png",
+            "sha256": "d78c3309577b4acf636bba1cd735366bd0a485d13cc44e7a404cb30d5b628bae",
+            "original": "data/raw/graspnet/scenes/scene_0045/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0045_realsense_pilot/view_003.png",
+            "sha256": "422c86af42ab9009df90336c4dc5220d2a4af08fd3b7be7cb4672d90aa38fadb",
+            "original": "data/raw/graspnet/scenes/scene_0045/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0046_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0046_realsense_pilot/view_001.png",
+            "sha256": "ed34acb8513cc283beb190eae8d208a98e9b5d0c95099ea85c0bc19294720af1",
+            "original": "data/raw/graspnet/scenes/scene_0046/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0046_realsense_pilot/view_002.png",
+            "sha256": "3d278c02694b693d8847d134e3888631b71c4920d55deb5e6f98dc3bc46eeed3",
+            "original": "data/raw/graspnet/scenes/scene_0046/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0046_realsense_pilot/view_003.png",
+            "sha256": "ec0ab7ce612cff7c765f3111d08fd65b00700af9b12060c1d6c9d4b407ff1789",
+            "original": "data/raw/graspnet/scenes/scene_0046/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0047_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0047_realsense_pilot/view_001.png",
+            "sha256": "95d1223dd6e52eb40f6f637fe35c33adec9afad17bf2c9e49f27fd7b3a5a3c3e",
+            "original": "data/raw/graspnet/scenes/scene_0047/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0047_realsense_pilot/view_002.png",
+            "sha256": "cec3847fd5851afb82614bf6e0e980c35f69995e8d6a3875f5e76a6e9fe70f7e",
+            "original": "data/raw/graspnet/scenes/scene_0047/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0047_realsense_pilot/view_003.png",
+            "sha256": "ff7ddbe4791ba453cf0c50454bff7cda20101c7c6c6860283c8f6a5a5acd1a37",
+            "original": "data/raw/graspnet/scenes/scene_0047/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0048_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0048_realsense_pilot/view_001.png",
+            "sha256": "5ccf86281091e3b03ed1b61b2c490dde320681a64aaf1f46f72582d475586802",
+            "original": "data/raw/graspnet/scenes/scene_0048/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0048_realsense_pilot/view_002.png",
+            "sha256": "bf1f403aa1270b31846c9546287677406a775ce72d32d46807945687f8c4fbe7",
+            "original": "data/raw/graspnet/scenes/scene_0048/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0048_realsense_pilot/view_003.png",
+            "sha256": "a3dc39512947ce394c94a0d90bb273a97e54aef8f219d311092591cf1e457ed1",
+            "original": "data/raw/graspnet/scenes/scene_0048/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0049_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0049_realsense_pilot/view_001.png",
+            "sha256": "10fb6228d54e5ec28ac4132aa17dd6bf8e7fb928dce6b8f014eabd6dd3763ac7",
+            "original": "data/raw/graspnet/scenes/scene_0049/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0049_realsense_pilot/view_002.png",
+            "sha256": "550f266a168976054f60a936343022ec57669e02131659afe7841aa14b874132",
+            "original": "data/raw/graspnet/scenes/scene_0049/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0049_realsense_pilot/view_003.png",
+            "sha256": "4a3bb2f462013d37054814a39fa855cdb8a8defa660f00f8fc5733b353de6149",
+            "original": "data/raw/graspnet/scenes/scene_0049/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0050_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0050_realsense_pilot/view_001.png",
+            "sha256": "eceed25c0897c3dede27a2f35b58dfb1c9bc1ce1238d2f96ae2462202950cbd5",
+            "original": "data/raw/graspnet/scenes/scene_0050/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0050_realsense_pilot/view_002.png",
+            "sha256": "9621b57143737694086cc92234d919538d606e48160756bf620dcc722e667543",
+            "original": "data/raw/graspnet/scenes/scene_0050/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0050_realsense_pilot/view_003.png",
+            "sha256": "a9180633a1e034d9c240c2a6d492cf29a30eae5100306888e6649f1220cb1a8d",
+            "original": "data/raw/graspnet/scenes/scene_0050/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0052_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0052_realsense_pilot/view_001.png",
+            "sha256": "d5f98112e11b70d026c58905d751815f7225595347f55d221e7c2b2cf8a3ff2b",
+            "original": "data/raw/graspnet/scenes/scene_0052/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0052_realsense_pilot/view_002.png",
+            "sha256": "14bfc9cbb3d89c313284ab7487dac590d76fad7f923d0c84f6505af4651d874b",
+            "original": "data/raw/graspnet/scenes/scene_0052/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0052_realsense_pilot/view_003.png",
+            "sha256": "603ed9d5a6350415f7e16591e879f7733b477818702512a1c5912718bc563090",
+            "original": "data/raw/graspnet/scenes/scene_0052/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0054_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0054_realsense_pilot/view_001.png",
+            "sha256": "543ef5a18c7038ee21474271837888602189daf120ab68c89eb79be6d4c04d70",
+            "original": "data/raw/graspnet/scenes/scene_0054/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0054_realsense_pilot/view_002.png",
+            "sha256": "6a379926fcd9a21099408ceb55b6e2d3af308d87657586fb8e49ec78b2c2947f",
+            "original": "data/raw/graspnet/scenes/scene_0054/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0054_realsense_pilot/view_003.png",
+            "sha256": "41e5e5d915fc58c75f2b6db14a83e9bc7e891ac83d2fce557e975aa7564997ba",
+            "original": "data/raw/graspnet/scenes/scene_0054/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0055_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0055_realsense_pilot/view_001.png",
+            "sha256": "89a7e896284b9a8253c3c7b97c27cb2e4c7a8c713a0a62ddf8ba6ff5b2307659",
+            "original": "data/raw/graspnet/scenes/scene_0055/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0055_realsense_pilot/view_002.png",
+            "sha256": "29dc08630a9b7dc66f96c1e25f50e1b16c05948cee066895a2a04077a101db83",
+            "original": "data/raw/graspnet/scenes/scene_0055/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0055_realsense_pilot/view_003.png",
+            "sha256": "36531758b5956d6d41e550a0bc1b4d8488066025a698d7b702166e5f3da9df97",
+            "original": "data/raw/graspnet/scenes/scene_0055/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0056_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0056_realsense_pilot/view_001.png",
+            "sha256": "f3e797f0b0e49080b6b3e00cc9c23035206ff27d2bf34de2f0dacf6c358f7677",
+            "original": "data/raw/graspnet/scenes/scene_0056/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0056_realsense_pilot/view_002.png",
+            "sha256": "1623512cd69a6b3b599f07de3d557d874be182a5beaf328319884448fa17cde2",
+            "original": "data/raw/graspnet/scenes/scene_0056/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0056_realsense_pilot/view_003.png",
+            "sha256": "7c009aab857138c3a0c8c35688c895776d76d6c90a7a2e5341dd6d8afbc2eae6",
+            "original": "data/raw/graspnet/scenes/scene_0056/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0057_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0057_realsense_pilot/view_001.png",
+            "sha256": "3c3427f72bcbed6f157a8526de8fe1719e7a3080df1cd561a9d2c198181d5eaa",
+            "original": "data/raw/graspnet/scenes/scene_0057/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0057_realsense_pilot/view_002.png",
+            "sha256": "034ca2e1642bf12848f48b1d8326ba2ffa90bb2d6cbae9eee606c19af263c12e",
+            "original": "data/raw/graspnet/scenes/scene_0057/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0057_realsense_pilot/view_003.png",
+            "sha256": "6da3316a8d4fc29786d5ef494cb70bffce52c5e152c4ed26e28159a84d681ca4",
+            "original": "data/raw/graspnet/scenes/scene_0057/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0058_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0058_realsense_pilot/view_001.png",
+            "sha256": "13833edd14feec54c080400aeb05595db512bf0c6bd2c12239df9b9bbf89648e",
+            "original": "data/raw/graspnet/scenes/scene_0058/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0058_realsense_pilot/view_002.png",
+            "sha256": "13fba06531256deb71a4514b1ad549a667134271f2050c1c8c8e1aac61cede0d",
+            "original": "data/raw/graspnet/scenes/scene_0058/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0058_realsense_pilot/view_003.png",
+            "sha256": "ce2832c84ea40b10e49e4fcde7b99c208e705b41c8b9c0ec9d8b2df4311f3fcf",
+            "original": "data/raw/graspnet/scenes/scene_0058/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0059_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0059_realsense_pilot/view_001.png",
+            "sha256": "b5d2924963d983aabeef2f6cd1b7d3eff903c8dc4a467224c8362f87035da3dd",
+            "original": "data/raw/graspnet/scenes/scene_0059/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0059_realsense_pilot/view_002.png",
+            "sha256": "fae2b2121136fbe93df0c9782d59a70e6f9fd142c27132a730c68f499e4ea7d2",
+            "original": "data/raw/graspnet/scenes/scene_0059/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0059_realsense_pilot/view_003.png",
+            "sha256": "df518f5af870c6539ce067a0aed00d2e01c0255e01ccbd1624c03ed96a1e5175",
+            "original": "data/raw/graspnet/scenes/scene_0059/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0060_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0060_realsense_pilot/view_001.png",
+            "sha256": "4ea990942011dc7012f0f0362339eb51f67609b1da14653582facc1409c6ba7a",
+            "original": "data/raw/graspnet/scenes/scene_0060/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0060_realsense_pilot/view_002.png",
+            "sha256": "2aaf9f2976dde5e2456bbd9f93ef281e31d427351b0c932ed74016d8f03b783f",
+            "original": "data/raw/graspnet/scenes/scene_0060/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0060_realsense_pilot/view_003.png",
+            "sha256": "f9b6c28a3e76539e547ea7d2a40c0610c9d62473f06df9d0529b530557e67408",
+            "original": "data/raw/graspnet/scenes/scene_0060/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0062_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0062_realsense_pilot/view_001.png",
+            "sha256": "cbb7a03c81deb42279b18d43b09b1f26be304bbdc1a386ad14712686a496d0d7",
+            "original": "data/raw/graspnet/scenes/scene_0062/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0062_realsense_pilot/view_002.png",
+            "sha256": "49876e90b7e9fdc3eddaea308b9ede6da150524b83066d23e37e6b01da92c390",
+            "original": "data/raw/graspnet/scenes/scene_0062/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0062_realsense_pilot/view_003.png",
+            "sha256": "72befa2639976fd83de68d735bcc8b3579633e5cbe5c4a81990efca21f76aee5",
+            "original": "data/raw/graspnet/scenes/scene_0062/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0063_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0063_realsense_pilot/view_001.png",
+            "sha256": "195a8b46a8579f93ed85773781ffd3de69ab981980394581665daeacbd591e83",
+            "original": "data/raw/graspnet/scenes/scene_0063/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0063_realsense_pilot/view_002.png",
+            "sha256": "5a002d4f97e762f07e5c1769cc05d0b4ac912803ff07ba27cfb9f4b5a8b2d006",
+            "original": "data/raw/graspnet/scenes/scene_0063/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0063_realsense_pilot/view_003.png",
+            "sha256": "43f722ec7c5411cef6138c32a07c6f9a0e11b262809a126e6f9ccb5d2c68a25d",
+            "original": "data/raw/graspnet/scenes/scene_0063/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0064_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0064_realsense_pilot/view_001.png",
+            "sha256": "33700eedb717bd3271a85e6565a48602610845a862ebc3921c424316f7b98aab",
+            "original": "data/raw/graspnet/scenes/scene_0064/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0064_realsense_pilot/view_002.png",
+            "sha256": "ebf2cb1efee1090a8323e96c1387bb039fe49206bcf463976095f358f6ed474e",
+            "original": "data/raw/graspnet/scenes/scene_0064/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0064_realsense_pilot/view_003.png",
+            "sha256": "0167ec7a00af46a8dc776392c2bfde2e410b10c02631995dcbfe611c3a4da777",
+            "original": "data/raw/graspnet/scenes/scene_0064/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0065_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0065_realsense_pilot/view_001.png",
+            "sha256": "0ac92b6ac0c6a34205ba37ab446d62458fcedc16c2b965f363c9dc3c999a1ce1",
+            "original": "data/raw/graspnet/scenes/scene_0065/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0065_realsense_pilot/view_002.png",
+            "sha256": "b93f44a5f006c6a072dc74cd7d76ec65c829d13165d54353328c57ec42c06114",
+            "original": "data/raw/graspnet/scenes/scene_0065/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0065_realsense_pilot/view_003.png",
+            "sha256": "3322ccfe903d2270b264cdf39f136ed2db50710a2ed56b5b377324cb24fea6f3",
+            "original": "data/raw/graspnet/scenes/scene_0065/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0067_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0067_realsense_pilot/view_001.png",
+            "sha256": "008f2a611e968c4743d719112dfe33f92afd411078adebfa347c929c77342d66",
+            "original": "data/raw/graspnet/scenes/scene_0067/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0067_realsense_pilot/view_002.png",
+            "sha256": "01a6ad86bdb1726a9d0f7340efe1c5a75d28372c8718fc35f36e31e8ff5027dd",
+            "original": "data/raw/graspnet/scenes/scene_0067/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0067_realsense_pilot/view_003.png",
+            "sha256": "96aa1b4b2f1af47dd61a33f92ec0153c6fafedab7e5faaa708c26ea5df3b3a3f",
+            "original": "data/raw/graspnet/scenes/scene_0067/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0069_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0069_realsense_pilot/view_001.png",
+            "sha256": "e1a299e6616a06e5bff6674778e1dd80fc2203dacce542becdd254adc75dc005",
+            "original": "data/raw/graspnet/scenes/scene_0069/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0069_realsense_pilot/view_002.png",
+            "sha256": "22eb4b2c4a0f4b9be49aad9bf05730882dc5166201dc5ff719f138139125df5b",
+            "original": "data/raw/graspnet/scenes/scene_0069/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0069_realsense_pilot/view_003.png",
+            "sha256": "70edeed17a5518621274d8fa24a73d2737201bf54a54e1c2b77868943f40fdfc",
+            "original": "data/raw/graspnet/scenes/scene_0069/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0070_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0070_realsense_pilot/view_001.png",
+            "sha256": "151e7566cb535ee5da8a38f0c5cde168c496ef86b2dd6ebb2ec5d609462549e0",
+            "original": "data/raw/graspnet/scenes/scene_0070/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0070_realsense_pilot/view_002.png",
+            "sha256": "45293f7441738466c35ca70d7a239a8917bb04f0ea720587e993158e28881bd7",
+            "original": "data/raw/graspnet/scenes/scene_0070/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0070_realsense_pilot/view_003.png",
+            "sha256": "35651468e895755f2c082b30a4905a777180f133e6e2789b98ac06faebb53ff2",
+            "original": "data/raw/graspnet/scenes/scene_0070/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0071_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0071_realsense_pilot/view_001.png",
+            "sha256": "5d4a87012e39cb1e4ce39c5d3cd602285898a8959caeafd55cb7bb9d81a406d3",
+            "original": "data/raw/graspnet/scenes/scene_0071/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0071_realsense_pilot/view_002.png",
+            "sha256": "27c8010ea4f3917e97b9ce7b93ec31ac8c5cc851e4904b6d785d490567272196",
+            "original": "data/raw/graspnet/scenes/scene_0071/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0071_realsense_pilot/view_003.png",
+            "sha256": "29a865b1f2b88911b61d0f5ff97828635138578cc0249afc7447381eda6173ab",
+            "original": "data/raw/graspnet/scenes/scene_0071/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0072_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0072_realsense_pilot/view_001.png",
+            "sha256": "535ff7f354b58f7dc4a2eb4ac741c021120b1acc231602d12a4b0abbfb2e3f59",
+            "original": "data/raw/graspnet/scenes/scene_0072/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0072_realsense_pilot/view_002.png",
+            "sha256": "d837fd8304a9c3688c6a26ace49f848074b16b9c5bc5e3cda559e20d5ef00c8a",
+            "original": "data/raw/graspnet/scenes/scene_0072/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0072_realsense_pilot/view_003.png",
+            "sha256": "3d69eb0c2eb589a7ff97b6c1a23b2d314ba90d315db6e9d1028d7ef380038e79",
+            "original": "data/raw/graspnet/scenes/scene_0072/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0073_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0073_realsense_pilot/view_001.png",
+            "sha256": "a1f391f96aca23758e4c54d1e4dd0234c9cf9cb71d72cc5e70a68f8e885f8fdc",
+            "original": "data/raw/graspnet/scenes/scene_0073/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0073_realsense_pilot/view_002.png",
+            "sha256": "9634ab1a9e06030ff13741f17a37c16eaf1eb1b4f5878027a0801015729181ec",
+            "original": "data/raw/graspnet/scenes/scene_0073/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0073_realsense_pilot/view_003.png",
+            "sha256": "d08fa1bcee8dd9a11200570776254cd4d356784b88e2d8ed8885275135641403",
+            "original": "data/raw/graspnet/scenes/scene_0073/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0074_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0074_realsense_pilot/view_001.png",
+            "sha256": "5e274997581e1415b903d08140a7ffdf3da5726005bba97fb95d357485656347",
+            "original": "data/raw/graspnet/scenes/scene_0074/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0074_realsense_pilot/view_002.png",
+            "sha256": "17610a1dd9eae4f5d5f579a105922c305995c2c05979de68dd19e2dd201f84a5",
+            "original": "data/raw/graspnet/scenes/scene_0074/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0074_realsense_pilot/view_003.png",
+            "sha256": "7cd9a97e9c8981b260d9c08276ab515138e1d537dfaed60411cb0e958f34b257",
+            "original": "data/raw/graspnet/scenes/scene_0074/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0075_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0075_realsense_pilot/view_001.png",
+            "sha256": "478977701749b90c55fbbc59d591dd539c2da29f85c2540acb7f6bd565594959",
+            "original": "data/raw/graspnet/scenes/scene_0075/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0075_realsense_pilot/view_002.png",
+            "sha256": "118baa8321e33d6ef92742b3393e0226ce170530241420398ffbb9caa5ee11d5",
+            "original": "data/raw/graspnet/scenes/scene_0075/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0075_realsense_pilot/view_003.png",
+            "sha256": "60a66818039a2f0debcfc62ebc299b81902c9c739d21efefccf053dcced9854f",
+            "original": "data/raw/graspnet/scenes/scene_0075/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0076_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0076_realsense_pilot/view_001.png",
+            "sha256": "1bbf241762947140a8089ccbdb2794deae96a24ff57fa866a98c51b8343159ba",
+            "original": "data/raw/graspnet/scenes/scene_0076/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0076_realsense_pilot/view_002.png",
+            "sha256": "a7369d9ada5eea6d3df9818b14d95193c36d0f054ab4cf1bfb75db1d1f652794",
+            "original": "data/raw/graspnet/scenes/scene_0076/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0076_realsense_pilot/view_003.png",
+            "sha256": "494fc3c26422774f8a8139467fa323cd3515207399ad1231cf024de6c65c3b43",
+            "original": "data/raw/graspnet/scenes/scene_0076/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0077_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0077_realsense_pilot/view_001.png",
+            "sha256": "48bc14ed35bd01ab85e406a85f43750c1b8af8bc64468272475f6ae7b839cfaf",
+            "original": "data/raw/graspnet/scenes/scene_0077/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0077_realsense_pilot/view_002.png",
+            "sha256": "22d0bfd2c0fb9f37db217298772d8f6636d0857b1b0a43079b88c0cec71a6e0c",
+            "original": "data/raw/graspnet/scenes/scene_0077/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0077_realsense_pilot/view_003.png",
+            "sha256": "005365e45d0992930c4a6c63a3f99bc177f2f882f6ebc850f7248b6da9e2944a",
+            "original": "data/raw/graspnet/scenes/scene_0077/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0078_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0078_realsense_pilot/view_001.png",
+            "sha256": "822ae122945bef8de3bc46bf4aa4b1bd159ad7ead4591d6c064a14f9b5d033d1",
+            "original": "data/raw/graspnet/scenes/scene_0078/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0078_realsense_pilot/view_002.png",
+            "sha256": "89dd59c3800973c5714248c1748c1d568e33d9324576b3ac3eb236dfd88dab0d",
+            "original": "data/raw/graspnet/scenes/scene_0078/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0078_realsense_pilot/view_003.png",
+            "sha256": "fcafebdaeee64f5b1257142d973b31298578f6aff481622fd3f23c70f71bbc27",
+            "original": "data/raw/graspnet/scenes/scene_0078/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0079_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0079_realsense_pilot/view_001.png",
+            "sha256": "a0fc8bb52cc1fbdc456d4ee3ab3b3136531940ddce6f15fe6c3d7d654cbe2caa",
+            "original": "data/raw/graspnet/scenes/scene_0079/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0079_realsense_pilot/view_002.png",
+            "sha256": "67fd134e75467a4193501482ef490287d0883a9af70cdc5ae7acae513439799f",
+            "original": "data/raw/graspnet/scenes/scene_0079/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0079_realsense_pilot/view_003.png",
+            "sha256": "b7415d01dd033420fe2ae6f5a635c2c13a2f476fa00ce5782555f801002a2621",
+            "original": "data/raw/graspnet/scenes/scene_0079/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0082_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0082_realsense_pilot/view_001.png",
+            "sha256": "f3a54d617216f74a6a4e72094b894e01dd0706a6f5f178a29154a23398f24062",
+            "original": "data/raw/graspnet/scenes/scene_0082/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0082_realsense_pilot/view_002.png",
+            "sha256": "8818688f916c8814706b08e9b446ceb6c0524f45c6ac194ab894b64acb3cc042",
+            "original": "data/raw/graspnet/scenes/scene_0082/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0082_realsense_pilot/view_003.png",
+            "sha256": "8f8f64806a56190ef6cc293aba3490b03d3bc984dc79d955eba8ebd042932d38",
+            "original": "data/raw/graspnet/scenes/scene_0082/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0083_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0083_realsense_pilot/view_001.png",
+            "sha256": "9b115883fd0c34f431d9259ca6e9c890b67119b5b472cd2b911aa8d141550a5e",
+            "original": "data/raw/graspnet/scenes/scene_0083/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0083_realsense_pilot/view_002.png",
+            "sha256": "61feab2aaad49edfad4424e9177d76dca0671e00cb3cdcb43b6f8a4aef9418d0",
+            "original": "data/raw/graspnet/scenes/scene_0083/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0083_realsense_pilot/view_003.png",
+            "sha256": "d71c30191598c71954b57c3fda4b3c1ed5774a86181fee78fbf2d6b584daa883",
+            "original": "data/raw/graspnet/scenes/scene_0083/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0084_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0084_realsense_pilot/view_001.png",
+            "sha256": "ae032bfaa7972a2f1d93cca85b6a363cfa05caca60ff6eba1052c8b15b4c9d81",
+            "original": "data/raw/graspnet/scenes/scene_0084/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0084_realsense_pilot/view_002.png",
+            "sha256": "28cf13fd926cdbfb91b1bf0bc771036b6806bb1c70d242a0e53bb7aef71f1e0d",
+            "original": "data/raw/graspnet/scenes/scene_0084/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0084_realsense_pilot/view_003.png",
+            "sha256": "560b4febe56fe5b91d04e2a512e391dd25bb745b64f878baa88a849d772c2196",
+            "original": "data/raw/graspnet/scenes/scene_0084/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0086_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0086_realsense_pilot/view_001.png",
+            "sha256": "a397ae56da44d6ddf922945344751d8b22c76341d7b3374414be7e45695c9064",
+            "original": "data/raw/graspnet/scenes/scene_0086/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0086_realsense_pilot/view_002.png",
+            "sha256": "e0616a9c81dbf9ff304a234ee84ab7bb00f52a2ba3e1b5dcdbf63218399876a5",
+            "original": "data/raw/graspnet/scenes/scene_0086/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0086_realsense_pilot/view_003.png",
+            "sha256": "a392084c020af1ac273f51f5efe2be14bfb3de8d20f7f94d2ef493795bf78e52",
+            "original": "data/raw/graspnet/scenes/scene_0086/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0087_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0087_realsense_pilot/view_001.png",
+            "sha256": "eba59a565fe8085ed8963bed9ddaa188064640598641e31e3560b0072ae92714",
+            "original": "data/raw/graspnet/scenes/scene_0087/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0087_realsense_pilot/view_002.png",
+            "sha256": "1f0e4e447dbc454f3d08779930ca0a40d76544e3d6e6f7ef47a1d775c65115f6",
+            "original": "data/raw/graspnet/scenes/scene_0087/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0087_realsense_pilot/view_003.png",
+            "sha256": "32660e055a231dac60da1ecf00f160fcf3d5648bf1ef1c4c01df026ed3983d07",
+            "original": "data/raw/graspnet/scenes/scene_0087/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0088_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0088_realsense_pilot/view_001.png",
+            "sha256": "98f2b6ba289a5e55c45dc3f2a309f663d1a4a82afdd55df811e2aebb40e3096e",
+            "original": "data/raw/graspnet/scenes/scene_0088/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0088_realsense_pilot/view_002.png",
+            "sha256": "19c7655a6d698c5f067ff53c155e189412936831aa70f2334c2ce98a0451f3e1",
+            "original": "data/raw/graspnet/scenes/scene_0088/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0088_realsense_pilot/view_003.png",
+            "sha256": "5c42cc0da4e86d5936ce280aaa9b7b8d227b53af702b410f33214224d6a6c8b6",
+            "original": "data/raw/graspnet/scenes/scene_0088/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0089_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0089_realsense_pilot/view_001.png",
+            "sha256": "6a9b49f89579b82fe4e46927d9ef76cbb860760217646d6f870379026cb119de",
+            "original": "data/raw/graspnet/scenes/scene_0089/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0089_realsense_pilot/view_002.png",
+            "sha256": "f2456ee2331bb12bb9f3a302cb55a3741c1d216e99b6b06ce078025f5afcbd34",
+            "original": "data/raw/graspnet/scenes/scene_0089/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0089_realsense_pilot/view_003.png",
+            "sha256": "dea02790c59d381d2722221a5033e2d33634ca5c0a1eb7cc92fb3c5ee71b1603",
+            "original": "data/raw/graspnet/scenes/scene_0089/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0090_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0090_realsense_pilot/view_001.png",
+            "sha256": "5d66d117de9e3338d4983bb6c35092e39d834ee9391d1aef95dacb80fdcc6aea",
+            "original": "data/raw/graspnet/scenes/scene_0090/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0090_realsense_pilot/view_002.png",
+            "sha256": "a10605b39352fd4ac9f86ae895d28958cde6ba019c834cbc582a3e3c6544977f",
+            "original": "data/raw/graspnet/scenes/scene_0090/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0090_realsense_pilot/view_003.png",
+            "sha256": "1e576dd65c15a58f2ecf5bd30f421a4e08e35b0031fd354cb0ee7efb4885c449",
+            "original": "data/raw/graspnet/scenes/scene_0090/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0091_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0091_realsense_pilot/view_001.png",
+            "sha256": "5e803319e4ba69acfebb3397fd07e625fd2c30cb263c3803300f987c1aadf004",
+            "original": "data/raw/graspnet/scenes/scene_0091/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0091_realsense_pilot/view_002.png",
+            "sha256": "9a6b8fd287bb20c5faccb5ad8b6e5942ca7dcbccc9514243156da7c23643874d",
+            "original": "data/raw/graspnet/scenes/scene_0091/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0091_realsense_pilot/view_003.png",
+            "sha256": "8ba4e0711f7245c263a50652315f10289301e2938ced08efc57b4f5996bd51c1",
+            "original": "data/raw/graspnet/scenes/scene_0091/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0093_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0093_realsense_pilot/view_001.png",
+            "sha256": "0cc84650261509394a53422947de15e8470f56ce2a5ce4794e32e7f4e7f94816",
+            "original": "data/raw/graspnet/scenes/scene_0093/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0093_realsense_pilot/view_002.png",
+            "sha256": "bbb15c1a0887977a1706a335ec15abdc34d83e53dd7d03e576226a0885163d32",
+            "original": "data/raw/graspnet/scenes/scene_0093/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0093_realsense_pilot/view_003.png",
+            "sha256": "1ab1181a5542a420ff8c591a8146ffc6b6fe3d5cb1946294e5c81e028c09a94f",
+            "original": "data/raw/graspnet/scenes/scene_0093/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0096_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0096_realsense_pilot/view_001.png",
+            "sha256": "23a9b8c825adfbcfbebdcfe64c3871367c1970fa217524bd836fb2aa15346691",
+            "original": "data/raw/graspnet/scenes/scene_0096/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0096_realsense_pilot/view_002.png",
+            "sha256": "7ca0af658beafc40dedb999f7ef0d115fcc4d8b8678bff23b57e9f681a055c87",
+            "original": "data/raw/graspnet/scenes/scene_0096/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0096_realsense_pilot/view_003.png",
+            "sha256": "4f71084e5a57cae54888f8bc55dbfbd613002dc03e4cd929d53bf6806da14a7b",
+            "original": "data/raw/graspnet/scenes/scene_0096/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0097_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0097_realsense_pilot/view_001.png",
+            "sha256": "92a8fbf44bfb8cca8f28381764949902f5eea1ebc171622ff0ec2a5134f6d784",
+            "original": "data/raw/graspnet/scenes/scene_0097/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0097_realsense_pilot/view_002.png",
+            "sha256": "120e4cd5a913565da44d087525a69a17d12237dc1873e15dab7266add49098ae",
+            "original": "data/raw/graspnet/scenes/scene_0097/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0097_realsense_pilot/view_003.png",
+            "sha256": "4adc53410923a446ab8e86c808df10c280788163da34ccffcf62f1d379173b74",
+            "original": "data/raw/graspnet/scenes/scene_0097/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0098_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0098_realsense_pilot/view_001.png",
+            "sha256": "af220d792390899d49a16773fd10bd3bc576a43b521caf58f095bc4f1a9c04a3",
+            "original": "data/raw/graspnet/scenes/scene_0098/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0098_realsense_pilot/view_002.png",
+            "sha256": "2ecd75ecfa4f2ffd3227d1555386d0a15c293374b7bf923a276ec465a29acd1b",
+            "original": "data/raw/graspnet/scenes/scene_0098/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0098_realsense_pilot/view_003.png",
+            "sha256": "633fdacb0713ac5fdead6c4f9ff28eb5887d6e9668d8cdefb27b6f4471f447ab",
+            "original": "data/raw/graspnet/scenes/scene_0098/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0099_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0099_realsense_pilot/view_001.png",
+            "sha256": "d734fde8942c3d77384de915852cd0b78dab4d8c2e6cfa72e08037122aab738a",
+            "original": "data/raw/graspnet/scenes/scene_0099/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0099_realsense_pilot/view_002.png",
+            "sha256": "11098a87cdb2f26554c475229d6da23beca825d7a2c0b3030d9f19c7510c3bf0",
+            "original": "data/raw/graspnet/scenes/scene_0099/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0099_realsense_pilot/view_003.png",
+            "sha256": "f4ea3eee76771086ef0d588cba8995f5df9b841d933ee6ac906a4627d5755118",
+            "original": "data/raw/graspnet/scenes/scene_0099/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      }
+    ]
+  },
+  "validation_data": {
+    "seed": 443,
+    "training": false,
+    "use_consistency": true,
+    "scenes": [
+      {
+        "scene_id": "scene_0000_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0000_realsense_pilot/view_001.png",
+            "sha256": "3af328b91795cc355c22e700dd9fa17957e6c25b9b37bd3016c9b8fac8cfcb19",
+            "original": "data/raw/graspnet/scenes/scene_0000/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0000_realsense_pilot/view_002.png",
+            "sha256": "0bbe52224173248685de8e99a086d9f1c4ef96d94c71c1913af8a25d6657535b",
+            "original": "data/raw/graspnet/scenes/scene_0000/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0000_realsense_pilot/view_003.png",
+            "sha256": "537128c27833e8fabf0df6fe29e7eb8c9939df10a4fdf8949ad8d71b911959b3",
+            "original": "data/raw/graspnet/scenes/scene_0000/realsense/rgb/0024.png",
+            "frame": "0024"
+          },
+          {
+            "id": "view_004",
+            "image": "data/processed/graspnet/scene_0000_realsense_pilot/view_004.png",
+            "sha256": "113117e36521a4dab03ca97c32c914a111975e93fb6f09632fb870527ed11290",
+            "original": "data/raw/graspnet/scenes/scene_0000/realsense/rgb/0036.png",
+            "frame": "0036"
+          },
+          {
+            "id": "view_005",
+            "image": "data/processed/graspnet/scene_0000_realsense_pilot/view_005.png",
+            "sha256": "209dfa50786b3e6a9bb8a3d242e6fa90c16cc6b1e59dc3521b52f1156ed952ff",
+            "original": "data/raw/graspnet/scenes/scene_0000/realsense/rgb/0048.png",
+            "frame": "0048"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0005_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0005_realsense_pilot/view_001.png",
+            "sha256": "2700f73148920c8af8f8e48fc7779a3b104cb9557f848f7c1c4f65ab55f213b8",
+            "original": "data/raw/graspnet/scenes/scene_0005/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0005_realsense_pilot/view_002.png",
+            "sha256": "6de8333463759da5db554e69b76a05fb54e55dc09d22e5631fda6cd65c89fe1a",
+            "original": "data/raw/graspnet/scenes/scene_0005/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0005_realsense_pilot/view_003.png",
+            "sha256": "59efb166e263933d7e6fdad6ff20d1b79e2269262cdfe3015d25bbad48de4c21",
+            "original": "data/raw/graspnet/scenes/scene_0005/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0008_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0008_realsense_pilot/view_001.png",
+            "sha256": "3ea18a4bb1aa1259be503e802db11b48cfca42098d8515dfefebd5db178440e8",
+            "original": "data/raw/graspnet/scenes/scene_0008/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0008_realsense_pilot/view_002.png",
+            "sha256": "08d865b62ee917075125d5073cfd8d9241f216131a80ae541cf52a92c7825dcb",
+            "original": "data/raw/graspnet/scenes/scene_0008/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0008_realsense_pilot/view_003.png",
+            "sha256": "f77304c1be49fc1b8a448027dc49e44967b9d2a129139274216ec6df65d19e30",
+            "original": "data/raw/graspnet/scenes/scene_0008/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0011_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0011_realsense_pilot/view_001.png",
+            "sha256": "81b9e677930d85632b78a49fab90b6b02d37ce94734d29f007c7c3b309121353",
+            "original": "data/raw/graspnet/scenes/scene_0011/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0011_realsense_pilot/view_002.png",
+            "sha256": "7fb97b7697766ee2b1a2a40a632aa0ef8852b3d5b5b1d2e68122e874ba59a792",
+            "original": "data/raw/graspnet/scenes/scene_0011/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0011_realsense_pilot/view_003.png",
+            "sha256": "a4b4d504e138d71739bffd88467accacb359d50bf4441ed84a8d45d641051a64",
+            "original": "data/raw/graspnet/scenes/scene_0011/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0017_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0017_realsense_pilot/view_001.png",
+            "sha256": "dbd9f4d390a80baf9a2d22d6a9ada6aeb655a96492f4f7ef7f842ffd952a29af",
+            "original": "data/raw/graspnet/scenes/scene_0017/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0017_realsense_pilot/view_002.png",
+            "sha256": "fd3833cf6994d64bb1ef36c3dd27e577cea8f36a478d8e1c0d4422710dba287d",
+            "original": "data/raw/graspnet/scenes/scene_0017/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0017_realsense_pilot/view_003.png",
+            "sha256": "347ba3c36a6c791ca7f422b3d4fd1a3b60ff56f518af000185d61eb84eaa2639",
+            "original": "data/raw/graspnet/scenes/scene_0017/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0019_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0019_realsense_pilot/view_001.png",
+            "sha256": "e2c5e6e81cf6137488d75275043e35d66a1d56bbb70739b53cf39191353583aa",
+            "original": "data/raw/graspnet/scenes/scene_0019/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0019_realsense_pilot/view_002.png",
+            "sha256": "3e709b3c9c1c874e34b518cb8abc7c8d145729af5cb5a663246903acd5f69d13",
+            "original": "data/raw/graspnet/scenes/scene_0019/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0019_realsense_pilot/view_003.png",
+            "sha256": "57dd28523b279015e4c1be70d9d0c0304654efc3ad54f60e6237a5b02e18f1dc",
+            "original": "data/raw/graspnet/scenes/scene_0019/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0021_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0021_realsense_pilot/view_001.png",
+            "sha256": "6e8b0ebd4b190de3601ad4d20a0e0c05ff45a9e4a04e26e487614bbe584f9bad",
+            "original": "data/raw/graspnet/scenes/scene_0021/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0021_realsense_pilot/view_002.png",
+            "sha256": "e2507caf1901f25e5b37e519970e0bf99392b58b4c787e16387759c0a46a034c",
+            "original": "data/raw/graspnet/scenes/scene_0021/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0021_realsense_pilot/view_003.png",
+            "sha256": "ac71235bbd116340f62ad55151ac4e0f7aee88220e26d92ab0ea96202f71ed04",
+            "original": "data/raw/graspnet/scenes/scene_0021/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0035_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0035_realsense_pilot/view_001.png",
+            "sha256": "12e4ff0390a4cdb9ed9c6ad4c493522fe8218e06750fb6fb70404d0caf782a8e",
+            "original": "data/raw/graspnet/scenes/scene_0035/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0035_realsense_pilot/view_002.png",
+            "sha256": "136cb23eaae428f352c077e3a82357e8634cef69c9680345db502be4e007783b",
+            "original": "data/raw/graspnet/scenes/scene_0035/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0035_realsense_pilot/view_003.png",
+            "sha256": "f701929adc273f311a421f9ccb5d8535010e7a7d2c92bd1a0d840279f928b991",
+            "original": "data/raw/graspnet/scenes/scene_0035/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0042_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0042_realsense_pilot/view_001.png",
+            "sha256": "daad61195ec842a4a10e9f3f0c724ed6775e9da683b7ca5f7b9aeee591810dbd",
+            "original": "data/raw/graspnet/scenes/scene_0042/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0042_realsense_pilot/view_002.png",
+            "sha256": "9483f2b2f630d4f2f2d12cdbe04ab9daa25d9ae25b8a0f080bc43712a1cec0a5",
+            "original": "data/raw/graspnet/scenes/scene_0042/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0042_realsense_pilot/view_003.png",
+            "sha256": "9cd7d314c56307e1d0d5c31fa90cb7632e488f01f8374cf16175757d0e822b90",
+            "original": "data/raw/graspnet/scenes/scene_0042/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0051_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0051_realsense_pilot/view_001.png",
+            "sha256": "8229efc01e836903fca8614bcfb75d6f2cbc83fa5b8366fa157fb1b7ae481474",
+            "original": "data/raw/graspnet/scenes/scene_0051/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0051_realsense_pilot/view_002.png",
+            "sha256": "3f859938ce3696c4bf47b6f86b17124cd9457943e45655128f5f3c22ffb45961",
+            "original": "data/raw/graspnet/scenes/scene_0051/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0051_realsense_pilot/view_003.png",
+            "sha256": "b33eaa113bf615f29f986c0b223ce3f52794081f78b1903ad2a82508077bb36f",
+            "original": "data/raw/graspnet/scenes/scene_0051/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0053_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0053_realsense_pilot/view_001.png",
+            "sha256": "b7a615765f7ef3d9e46778a0c0a668152d54d7240b7bb9dac0d632014ecb4544",
+            "original": "data/raw/graspnet/scenes/scene_0053/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0053_realsense_pilot/view_002.png",
+            "sha256": "6fec854de7d572a12513f2ebbad8f6c78fc0e76a7f3348c6856a31bfe1392786",
+            "original": "data/raw/graspnet/scenes/scene_0053/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0053_realsense_pilot/view_003.png",
+            "sha256": "69352661fa02d79ff59d4885b640886e31f4ba5b4eca5631dfda1e8a25311893",
+            "original": "data/raw/graspnet/scenes/scene_0053/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0061_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0061_realsense_pilot/view_001.png",
+            "sha256": "9525312ac74e61477e03642bba34ed12ec02c7583e2133b315ffdff7a4fa53fc",
+            "original": "data/raw/graspnet/scenes/scene_0061/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0061_realsense_pilot/view_002.png",
+            "sha256": "2e5846df5613962796e4e28fcc21212e274842dd9468d649786d9e74a7dbbf9f",
+            "original": "data/raw/graspnet/scenes/scene_0061/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0061_realsense_pilot/view_003.png",
+            "sha256": "c9a458c5e3e6281ed5f6c7526987685e634f1c1915129e5305d51e01dc8bf5ed",
+            "original": "data/raw/graspnet/scenes/scene_0061/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0066_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0066_realsense_pilot/view_001.png",
+            "sha256": "fb952212a33e6c29d4796983491c5a80f9732f6e98a836b6d213843dabfd3c5d",
+            "original": "data/raw/graspnet/scenes/scene_0066/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0066_realsense_pilot/view_002.png",
+            "sha256": "f4fcf4941930cb48948e0e83460b0f58f50b6ea614622298b3b2d804e4a828fd",
+            "original": "data/raw/graspnet/scenes/scene_0066/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0066_realsense_pilot/view_003.png",
+            "sha256": "532ff7bba8d7d2a389554911cd53dcae01f98622393462b0a98c15f650834fe6",
+            "original": "data/raw/graspnet/scenes/scene_0066/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0068_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0068_realsense_pilot/view_001.png",
+            "sha256": "26722de28a484f58b58bc00b0c6300635d6c34f121b7c40c0c36a18cc22d40d0",
+            "original": "data/raw/graspnet/scenes/scene_0068/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0068_realsense_pilot/view_002.png",
+            "sha256": "9f95e6f1577b34179425d4805cd3aca90791f90b300e7c7a6c19e156a602cf06",
+            "original": "data/raw/graspnet/scenes/scene_0068/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0068_realsense_pilot/view_003.png",
+            "sha256": "edb8d31e2814593fcd9a60b0c230bdc9c7d76f15fb412aeec9eade1aa347b43a",
+            "original": "data/raw/graspnet/scenes/scene_0068/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0080_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0080_realsense_pilot/view_001.png",
+            "sha256": "bcddc98d280dfe56a5651b8bf03bd3ad0b733759fa85352cea3e2b9ec1faaaf6",
+            "original": "data/raw/graspnet/scenes/scene_0080/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0080_realsense_pilot/view_002.png",
+            "sha256": "4f3ffb8ee345a33156bde475abc85a8973a770f78e615b76ea30640061e319ee",
+            "original": "data/raw/graspnet/scenes/scene_0080/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0080_realsense_pilot/view_003.png",
+            "sha256": "8e491fa39b2ef6c5036ec581ee40bfc5102341b33c3d46a3bbad21069feefaa7",
+            "original": "data/raw/graspnet/scenes/scene_0080/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0081_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0081_realsense_pilot/view_001.png",
+            "sha256": "526eab5da8f532d1b9e3fe955df93f63a666ede17052f636e5194465570442d2",
+            "original": "data/raw/graspnet/scenes/scene_0081/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0081_realsense_pilot/view_002.png",
+            "sha256": "2071bf4803ba915c60bcb9b5199f5f8265382fdb3d25c6bd730d0ad0bbff15b6",
+            "original": "data/raw/graspnet/scenes/scene_0081/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0081_realsense_pilot/view_003.png",
+            "sha256": "d3f7656866e349752b1f5d911f6ed5d181e025800443f72b6ddfdcf0435822d0",
+            "original": "data/raw/graspnet/scenes/scene_0081/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0085_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0085_realsense_pilot/view_001.png",
+            "sha256": "4f12048f37c8c7f2c5f347d74d4b4545b46029aa2c0217e69162aa171bb9603d",
+            "original": "data/raw/graspnet/scenes/scene_0085/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0085_realsense_pilot/view_002.png",
+            "sha256": "21c6c33ecff962e258fd1ba6f026bfb9fdb89b0fc49a2e48957141983edd3705",
+            "original": "data/raw/graspnet/scenes/scene_0085/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0085_realsense_pilot/view_003.png",
+            "sha256": "0156eec3015d4878f095fcc7c1ff653784dd82bded4758f98e67e7e9536c483a",
+            "original": "data/raw/graspnet/scenes/scene_0085/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0092_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0092_realsense_pilot/view_001.png",
+            "sha256": "340cd2b34cb6b9038bccd637e4da7e5e0169035fed48551c0ed43131c67b8eea",
+            "original": "data/raw/graspnet/scenes/scene_0092/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0092_realsense_pilot/view_002.png",
+            "sha256": "86aa5d1e4e936ba0e79043907ec4acbbd45feeb8a20ce36b5e18e0830dfb241a",
+            "original": "data/raw/graspnet/scenes/scene_0092/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0092_realsense_pilot/view_003.png",
+            "sha256": "daeae5b4215a3c8a3bc4a9b24a9d36f70367b1b75a2ce807192483fafb9e6166",
+            "original": "data/raw/graspnet/scenes/scene_0092/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0094_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0094_realsense_pilot/view_001.png",
+            "sha256": "835051d66fb298738dcb93a8070d1c6e403b76425362803936724fd8bafce5af",
+            "original": "data/raw/graspnet/scenes/scene_0094/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0094_realsense_pilot/view_002.png",
+            "sha256": "9bb245f7d1c7627f43cefff7135f68ca71442b4ae689777e65f6745f18ac6c42",
+            "original": "data/raw/graspnet/scenes/scene_0094/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0094_realsense_pilot/view_003.png",
+            "sha256": "ab322b630c46e12dc44c461ed21e014c6ebb24064b1099bb7dff1add3775a78f",
+            "original": "data/raw/graspnet/scenes/scene_0094/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      },
+      {
+        "scene_id": "scene_0095_realsense_pilot",
+        "source": "graspnet",
+        "model_size": [
+          518,
+          294
+        ],
+        "reference_index": 0,
+        "views": [
+          {
+            "id": "view_001",
+            "image": "data/processed/graspnet/scene_0095_realsense_pilot/view_001.png",
+            "sha256": "32eeec960bc669259a08b42c5d68a76026dee336092678af8b39afdd027e2d74",
+            "original": "data/raw/graspnet/scenes/scene_0095/realsense/rgb/0000.png",
+            "frame": "0000"
+          },
+          {
+            "id": "view_002",
+            "image": "data/processed/graspnet/scene_0095_realsense_pilot/view_002.png",
+            "sha256": "8546796d0a55079d088fa86d358e0b8723eaa7a38f0b31b5b3fc1e16381403de",
+            "original": "data/raw/graspnet/scenes/scene_0095/realsense/rgb/0012.png",
+            "frame": "0012"
+          },
+          {
+            "id": "view_003",
+            "image": "data/processed/graspnet/scene_0095_realsense_pilot/view_003.png",
+            "sha256": "d548e08af367c541711f7e9d0f58c0df1f351743fc51588ff4774d973905b9c7",
+            "original": "data/raw/graspnet/scenes/scene_0095/realsense/rgb/0024.png",
+            "frame": "0024"
+          }
+        ]
+      }
+    ]
+  }
+}

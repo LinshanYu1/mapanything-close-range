@@ -1,5 +1,27 @@
 # MapAnything 近距离测距项目
 
+## 统一安装依赖（Mac）
+
+项目使用 pip 管理依赖，版本记录在 `requirements-macos-py312.txt`。
+该文件来自已通过测试的 Python 3.12 环境快照，不是所有平台通用的锁文件。
+本地修改后的模型代码从 `third_party` 加载，不使用旧项目路径。
+
+```bash
+# 在项目根目录运行；需要已有 Python 3.12
+bash scripts/tools/setup_env.sh
+source .venv/bin/activate
+python scripts/tools/check_environment.py
+```
+
+没有 `python3.12` 命令时，可通过 `PYTHON312_BIN` 指定已有 Python 3.12 解释器。
+脚本只创建/更新项目 `.venv`，不改系统 Python。已有非 3.12 的 `.venv` 会报错，不会删除它。
+PyCharm 的项目解释器选择本项目 `.venv/bin/python`；安装与运行必须使用同一个环境。
+依赖安装包含 OpenCV（cv2）、jaxtyping、PyTorch 和上游依赖，不需要逐个补包。
+不要同时安装 `opencv-python` 和 `opencv-python-headless`；本项目使用后者。
+`check_environment.py` 只检查依赖和本地代码来源，不证明数据划分或训练已经就绪。
+Colab/CUDA 环境需单独确认 PyTorch 与 CUDA 版本，不直接套用这个 Mac 快照。
+
+
 本项目使用预训练 MapAnything，根据同一静态场景的一张或多张照片预测三维点图，再计算人工指定的两个表面点 A、B 之间的直线距离，与尺子实测距离比较。
 
 当前已实现 M0 baseline 的数据准备、参考图选点、单图/多图推理和距离评估。模型改动 A/B、微调训练尚未实现。
@@ -15,7 +37,7 @@ bash scripts/local.sh scripts/predict_directory.py --input data/processed/phone
 也可使用绝对路径，例如本机：
 
 ```bash
-bash scripts/local.sh scripts/predict_directory.py --input /Users/linshanyu/PycharmProjects/github.com/LinshanYu1/mapanything-close-range/data/processed/phone
+bash scripts/local.sh scripts/predict_directory.py --input data/processed/phone
 ```
 
 程序按名称排序遍历父目录的直接子目录，每个子目录是一组场景。一张图片自动单图预测，两张及以上自动联合预测；不同场景不会混在一起。支持图片直接放在场景目录，或放在该场景的 images 子目录（不能同时两处放图）。输入必须是已预处理的图片，不能直接传 raw。
@@ -121,14 +143,14 @@ outputs/某次实验/
 所有命令在仓库根目录执行。本机为：
 
 ```bash
-cd /Users/linshanyu/PycharmProjects/github.com/LinshanYu1/mapanything-close-range
+cd mapanything-close-range
 ```
 
 `bash scripts/local.sh ...` 是运行入口：先切换到项目根目录，再选择 Python，配置上游代码路径和缓存，最后运行指定脚本。
 
-Python 选择顺序为：`PYTHON_BIN` 指定的解释器 → 本项目 `.venv/bin/python` → 本机旧项目 `/Users/linshanyu/Desktop/dl-project/.venv-baseline/bin/python`。
+Python 选择顺序为：`PYTHON_BIN` 指定的解释器 → 本项目 `.venv/bin/python` → 已激活的虚拟环境（VIRTUAL_ENV / CONDA_PREFIX） → 本项目 `.venv-baseline/bin/python`。
 
-本机默认复用旧项目的 Hugging Face 和 Torch 缓存；不要删除旧环境后还期待启动器正常运行。不要直接使用未安装依赖的 IDE 默认解释器。
+默认使用项目 `.cache/huggingface` 和 `.cache/torch`；可通过 HF_HOME、TORCH_HOME 显式指定已有缓存。不要直接使用未安装依赖的 IDE 默认解释器。
 
 其他同学需根据 `third_party/map-anything/README.md` 安装匹配的依赖环境，设置自己的路径，例如：
 
@@ -251,21 +273,29 @@ bash scripts/local.sh scripts/evaluate.py --run outputs/phone_multi_002
 
 手机标签来自尺子；GraspNet 标签来自 RGB 对齐的深度和相机内参。两者转换成统一清单与点对标签后，共用 run_baseline.py 和 evaluate.py。
 
-当前提供旧 GraspNet pilot 的兼容导入，不是完整下载和批量标签生成器：
+当前流程是下载原始场景、生成模型输入和距离标签，再批量检查与预测：
 
 ```bash
-bash scripts/local.sh scripts/graspnet/import_legacy.py --legacy-manifest /Users/linshanyu/Desktop/dl-project/output/distance_pilot_20/manifest.json --legacy-root /Users/linshanyu/Desktop/dl-project
-bash scripts/local.sh scripts/run_baseline.py --manifest data/manifests/graspnet/graspnet_pilot.json --mode single --output outputs/graspnet_single_002
-bash scripts/local.sh scripts/evaluate.py --manifest data/manifests/graspnet/graspnet_pilot.json --run outputs/graspnet_single_002
+# 已下载并解压完成时跳过这一条
+bash scripts/local.sh scripts/graspnet/download_mirror.py
+
+# 默认扫描全部场景，选择三帧、生成十对距离标签
+bash scripts/local.sh scripts/graspnet/prepare.py
+
+# 检查输入，不加载模型权重
+bash scripts/local.sh scripts/predict_directory.py --input data/processed/graspnet --check-only
+
+# 实际预测，有标签时自动评估距离
+bash scripts/local.sh scripts/predict_directory.py --input data/processed/graspnet
 ```
 
-本机该 GraspNet 场景已导入，不必重跑导入命令。导入器选择首个标签质检合格的参考视图，保留原标签来源和预处理方式；传感器标签不等于独立尺量真值。RGB-only 推理不提供真实深度或相机参数。
+真实深度与相机内参用于生成距离标签；RGB-only 推理不将它们提供给模型。检查通过后还需抽查点位与标签，具体步骤见 [GraspNet 操作说明](scripts/graspnet/README.md)。
 
 ## 十、脚本职责和后续工作
 
 脚本按数据来源分组：`scripts/phone/` 处理手机照片，`scripts/graspnet/` 处理 GraspNet，`scripts/tools/` 预留共用检查工具。预测与评估入口留在 `scripts/`，两类数据共用。底层共用函数放在 `src/close_range/`。
 
-本次仅调整目录，没有改变数据格式或处理顺序：手机照片仍然先 prepare，再 annotate，然后 predict/evaluate。GraspNet 已提供 download.py、prepare.py 及旧数据导入器，详见 [GraspNet 操作说明](scripts/graspnet/README.md)。
+本次仅调整目录，没有改变数据格式或处理顺序：手机照片仍然先 prepare，再 annotate，然后 predict/evaluate。GraspNet 已提供三个下载入口和 prepare.py 预处理脚本，详见 [GraspNet 操作说明](scripts/graspnet/README.md)。
 
 | 脚本 | 职责 |
 |---|---|
@@ -279,11 +309,21 @@ bash scripts/local.sh scripts/evaluate.py --manifest data/manifests/graspnet/gra
 | evaluate.py | 读取预测和标签，计算测距误差 |
 | graspnet/download.py | 下载官方包、选择场景解压 |
 | graspnet/prepare.py | 原始 RGB-D 数据预处理与自动点对标签生成 |
-| graspnet/import_legacy.py | 导入旧 GraspNet pilot 数据 |
-| legacy/distance_pilot/ | 旧实验代码存档，含旧路径假设，不是新流程入口 |
+| graspnet/download_all.py | 下载全部官方场景包并解压 |
+| graspnet/download_mirror.py | 下载完整场景镜像、校验并解压 |
 
 后续计划：默认扫描各场景并逐张原图标注、指定场景重新标注、精确记录缩放裁剪坐标转换、逐视图评估、实现 A/B 和训练流程。以上均不应视为已完成。
 
 原始图、处理图、大型权重和实验输出默认不提交 Git。共享数据应使用单独的数据存储方式；正式实验需要按场景划分训练/验证/测试集。
 
-分来源操作说明：[手机照片](scripts/phone/README.md)、[GraspNet](scripts/graspnet/README.md)。legacy 是旧实验存档，不参与当前流程。
+分来源操作说明：[手机照片](scripts/phone/README.md)、[GraspNet](scripts/graspnet/README.md)。
+
+## 直接运行距离测试
+
+在 PyCharm 中打开 `src/close_range/main.py`，修改 `TEST_ARGS` 数组并运行，使用项目 `.venv` 解释器。
+数组依次为：模型类型、modelA_dir、modelB_dir、modelAB_dir、场景 manifest、权重文件、输入模式、设备、输出根目录。
+指定 A 只加载 A 目录，指定 B 只加载 B 目录；AB 使用联合训练后的 AB 目录，不自动拼接单独训练的 A/B。
+`baseline` 使用原始模型；`single` 只用参考图，`multi` 使用全部视图，`both` 分别测试两种输入。
+模型只接收 RGB；点坐标用于读取预测三维点，实测距离只参与评分，不进行真实尺度对齐。
+每次在输出根目录自动新建带时间戳的子目录，包含 summary.json、各输入模式的 metrics.csv 和三维预测。
+此入口只测试选择的模型；比较原模型时将数组首项改为 baseline 再运行。

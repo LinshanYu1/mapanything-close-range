@@ -8,7 +8,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from close_range.common import ROOT, read, save, resolve, sha
+from close_range.common import ROOT, read, save, resolve, sha, portable_path
 from run_baseline import load_model, prepare_inputs, predict_scene
 from evaluate import evaluate_run
 
@@ -66,7 +66,7 @@ def scene_manifest(scene, manifests):
             scene_id=scene.name,
             source="unlabeled",
             views=[
-                dict(id=p.stem, image=str(p.resolve()), sha256=sha(p)) for p in files
+                dict(id=p.stem, image=portable_path(p), sha256=sha(p)) for p in files
             ],
             reference_index=0,
             model_size=list(sizes[0]),
@@ -130,7 +130,7 @@ def run_batch(input_dir, manifests, out, device, check_only=False):
             mode="",
             status="failed",
             error="",
-            output=str(out / scene.name),
+            output=portable_path(out / scene.name),
         )
         try:
             manifest, manifest_path = scene_manifest(scene, manifests)

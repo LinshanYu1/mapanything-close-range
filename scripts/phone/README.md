@@ -120,5 +120,3 @@ bash scripts/local.sh scripts/predict_directory.py --input data/processed/phone 
 4. 再运行批量入口的 `--check-only`，验证场景发现和多图分组。
 
 结果：3 张 RGB PNG，尺寸 518×392，官方加载器成功读取 3 个视图，批量状态为 `checked`。本次临时输入来自目前手动加过标记的原图，仅验证格式兼容；正式目录中原有干净 processed 图片没有被覆盖。
-
-本次检查记录：`/private/tmp/data-branches-20261031-ey588qfi/phone_check/summary.csv`。临时目录可能被系统清理，日常复验请使用上面的命令生成新记录。

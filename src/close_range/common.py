@@ -34,6 +34,11 @@ _UNIT_TO_INCH = {
 }
 
 
+def portable_path(path):
+    """保存相对于项目根目录的路径；外部数据保留 ../ 相对关系。"""
+    return Path(os.path.relpath(resolve(path).resolve(), ROOT)).as_posix()
+
+
 def phone_distance(scene, config=None):
     """Read a strictly positive measurement for a scene, returned in inch.
 
