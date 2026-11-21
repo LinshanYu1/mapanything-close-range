@@ -26,7 +26,7 @@ from close_range.common import ROOT, REVISION, sha, portable_path
 TRAIN_ARGS = [
     "B",                          # 改为 B
     "configs/graspnet_split.json", # 使用相同的数据划分
-    "checkpoints/graspnet_B",      # B 单独保存，不覆盖 A
+    "checkpoints/graspnet_B_run2", # 新训练必须使用空目录，不覆盖共享权重
     "mps",
     50,                            # 先跑 2 轮检查，再做正式训练
     5e-4,

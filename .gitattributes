@@ -1,0 +1,4 @@
+
+# PyTorch archives are binary; never normalize line endings or merge as text.
+*.pt binary
+*.pth binary
