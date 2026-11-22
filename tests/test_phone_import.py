@@ -2,6 +2,7 @@ import sys
 import tempfile
 import unittest
 import zipfile
+from PIL import Image
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,7 +33,7 @@ class ImportTests(unittest.TestCase):
         d = base / name
         d.mkdir(parents=True)
         for f in files:
-            (d / f).write_bytes(data)
+            Image.new("RGB", (8, 8), "white").save(d / f)
         return d
 
     def test_find_root_through_wrapper_folders(self):
@@ -52,7 +53,8 @@ class ImportTests(unittest.TestCase):
         self.scene(self.shared, "scene-004", files=("view_001.jpg", "view_002.jpg", "view_003.jpg"))
         (self.shared / "scene-002" / ".DS_Store").write_bytes(b"junk")
         self.scene(self.dest, "scene-003")  # identical -> skipped
-        self.scene(self.dest, "scene-004")  # different -> conflict
+        self.scene(self.dest, "scene-004")
+        Image.new("RGB", (8, 8), "black").save(self.dest / "scene-004/view_001.jpg")  # valid difference -> conflict
         result = import_scenes(self.shared, self.dest)
         self.assertEqual(result["added"], ["scene-002"])
         self.assertEqual(result["skipped"], ["scene-003"])
@@ -122,7 +124,7 @@ class FakeDrive:
         self.calls.append(id)
         if id in self.fail:
             raise RuntimeError("rate limited")
-        Path(output).write_bytes(id.encode())
+        Image.new("RGB", (8, 8), "white").save(output) if Path(output).suffix == ".jpg" else Path(output).write_bytes(id.encode())
         return output
 
 
@@ -132,6 +134,7 @@ class FetchDriveTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         self.out, self.dest = self.root / "drive", self.root / "raw"
         (self.dest / "scene-002").mkdir(parents=True)
+        Image.new("RGB", (8, 8), "white").save(self.dest / "scene-002/view_001.jpg")
 
     def tearDown(self):
         self.temp.cleanup()
@@ -161,6 +164,29 @@ class FetchDriveTests(unittest.TestCase):
         self.assertTrue((self.out / "scene-011" / "view_001.jpg").is_file())
         self.assertFalse((self.out / "scene-012").exists())
         self.assertEqual(import_scenes(find_root(self.out), self.dest)["added"], ["scene-011"])
+
+    def test_repairs_empty_local_photo(self):
+        local = self.dest / "scene-002/view_001.jpg"
+        local.write_bytes(b"")
+        drive = FakeDrive([("a1", "scene-002/view_001.jpg")])
+        fetch_drive("ID", self.out, self.dest, gdown=drive, sleep=lambda s: None)
+        self.assertEqual(drive.calls, ["a1"])
+        result = import_scenes(self.out, self.dest)
+        self.assertEqual(result["repaired"], ["scene-002"])
+        with Image.open(local) as im:
+            im.load()
+
+    def test_empty_download_is_not_imported(self):
+        class EmptyDrive(FakeDrive):
+            def download(self, id, output, quiet):
+                self.calls.append(id)
+                Path(output).write_bytes(b"")
+                return output
+        drive = EmptyDrive([("x", "scene-003/view_001.jpg")])
+        result = fetch_drive("ID", self.out, self.dest, gdown=drive, sleep=lambda s: None)
+        self.assertEqual(result["failed"], ["scene-003"])
+        self.assertEqual(len(drive.calls), 3)
+        self.assertFalse((self.out / "scene-003").exists())
 
     def test_missing_distances_conf_is_fatal(self):
         drive = FakeDrive([("d", "distances.conf")], fail={"d"})

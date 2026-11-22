@@ -40,8 +40,8 @@ def collect(sources, work):
 
 
 def report(title, result):
-    for kind in ("added", "skipped"):
-        if result[kind]:
+    for kind in ("added", "skipped", "repaired"):
+        if result.get(kind):
             print(f"{title} {kind}: {', '.join(result[kind])}")
     for item in result["conflicts"]:
         print(f"{title} CONFLICT: {item}")
@@ -63,7 +63,7 @@ def main():
             if a.folder:
                 drive = fetch_drive(a.folder, work / "drive", dest)
                 if drive["present"]:
-                    print("Already present locally (not downloaded): " + ", ".join(drive["present"]))
+                    print("Reused valid local files in scenes: " + ", ".join(drive["present"]))
                 for path in drive["duplicates"]:
                     print(f"WARNING duplicate file name on Drive, used the first copy: {path}")
                 for scene in drive["failed"]:
@@ -88,7 +88,7 @@ def main():
             print(f"Importing from {root}")
             scenes = import_scenes(root, dest)
             report("Scenes", scenes)
-            added_scenes += scenes["added"]
+            added_scenes += scenes["added"] + scenes["repaired"]
             conflicts += len(scenes["conflicts"])
             conf = root / "distances.conf"
             if conf.is_file():

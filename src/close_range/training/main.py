@@ -10,6 +10,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from close_range.common import ROOT, REVISION, sha, portable_path
+from close_range.data_split import load_split
 # 直接点击 Run 时使用下面的数组；按注释顺序填写。
 # TRAIN_ARGS = [
 #     "A",                              # 0: A / B / AB
@@ -23,16 +24,29 @@ from close_range.common import ROOT, REVISION, sha, portable_path
 #     None,                             # 8: 历史模型目录；None 表示初始化新的 A/B
 #     "model_best.pt",                  # 9: 历史权重文件，也可用 model.pt
 # ]
+# TRAIN_ARGS = [
+#     "B",                          # 改为 B
+#     "configs/graspnet_split.json", # 使用相同的数据划分
+#     "checkpoints/graspnet_B_run2", # 新训练必须使用空目录，不覆盖共享权重
+#     "mps",
+#     50,                            # 先跑 2 轮检查，再做正式训练
+#     5e-4,
+#     0.1,                          # 跨视角一致性损失权重
+#     443,
+#     None,                         # 首次训练 B，不加载 A 参数
+#     "model_best.pt",
+# ]
+
 TRAIN_ARGS = [
-    "B",                          # 改为 B
-    "configs/graspnet_split.json", # 使用相同的数据划分
-    "checkpoints/graspnet_B_run2", # 新训练必须使用空目录，不覆盖共享权重
+    "A",                          # 改为 B
+    "configs/phone_split.json", # 使用相同的数据划分
+    "checkpoints/phone_A", # 新训练必须使用空目录，不覆盖共享权重
     "mps",
-    50,                            # 先跑 2 轮检查，再做正式训练
+    30,                            # 先跑 2 轮检查，再做正式训练
     5e-4,
     0.1,                          # 跨视角一致性损失权重
     443,
-    None,                         # 首次训练 B，不加载 A 参数
+    "checkpoints/graspnet_A",       # 把之前graspnet_A 训练的参数当成其实参数
     "model_best.pt",
 ]
 
@@ -81,40 +95,6 @@ def parse_args(argv=None):
         parser.error("consistency-weight 必须为有限非负数")
     return args
 
-
-def load_split(path):
-    """固定清单；按原始场景和图片指纹检查各集合之间的泄漏。"""
-    path = project_path(path)
-    if not path.is_file():
-        raise FileNotFoundError("缺少数据划分。预处理完成后先运行：python scripts/graspnet/make_split.py；此步骤只需执行一次。")
-    split = json.loads(path.read_text())
-    if not isinstance(split, dict):
-        raise ValueError("split 必须是 JSON 对象")
-    result, owners, image_owners = {}, {}, {}
-    for name in ("train", "val", "test"):
-        entries = split.get(name, [])
-        if not isinstance(entries, list) or (name != "test" and not entries):
-            raise ValueError(f"{name} 必须是非空的 manifest 路径列表")
-        paths = []
-        for entry in entries:
-            if not isinstance(entry, str):
-                raise ValueError(f"{name} 中的路径必须是字符串")
-            manifest_path = project_path(entry)
-            if manifest_path in paths:
-                raise ValueError(f"{name} 存在重复清单：{entry}")
-            manifest = json.loads(manifest_path.read_text())
-            identity = (manifest["source"], manifest.get("original_scene") or manifest["scene_id"])
-            if identity in owners and owners[identity] != name:
-                raise ValueError(f"原始场景跨集合重复：{identity}")
-            owners[identity] = name
-            for view in manifest["views"]:
-                digest = view["sha256"]
-                if digest in image_owners and image_owners[digest] != name:
-                    raise ValueError(f"图片跨集合重复：{entry}")
-                image_owners[digest] = name
-            paths.append(manifest_path)
-        result[name] = paths
-    return result
 
 
 def main(argv=None):

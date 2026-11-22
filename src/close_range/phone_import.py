@@ -57,36 +57,68 @@ def safe_extract(archive, output):
     return output
 
 
+def valid_file(path):
+    """Reject empty files and fully decode JPG/PNG before accepting them."""
+    from PIL import Image
+    path = Path(path)
+    try:
+        if not path.is_file() or path.stat().st_size == 0:
+            return False
+        if path.suffix.lower() in {".jpg", ".jpeg", ".png"}:
+            with Image.open(path) as im:
+                im.verify()
+            with Image.open(path) as im:
+                im.load()
+        return True
+    except (OSError, ValueError, SyntaxError):
+        return False
+
+
 def import_scenes(src_root, dest):
-    """Copy new scene folders; returns dict of added / skipped / conflicts."""
+    """Validate first; repair missing/broken files, never overwrite valid differences."""
+    import hashlib
     dest = Path(dest)
     dest.mkdir(parents=True, exist_ok=True)
-    result = dict(added=[], skipped=[], conflicts=[])
+    result = dict(added=[], skipped=[], conflicts=[], repaired=[])
     for scene in _scene_dirs(src_root):
         files = _files(scene)
         target = dest / scene.name
-        if target.exists():
-            mine = {f.name: f.stat().st_size for f in _files(target)}
-            theirs = {f.name: f.stat().st_size for f in files}
-            if mine == theirs:
+        if not files or any(not valid_file(f) for f in files):
+            result["conflicts"].append(f"{scene.name}: empty or invalid source files; not imported")
+            continue
+        existed = target.exists()
+        if existed:
+            local = {f.name: f for f in _files(target)}
+            incoming = {f.name: f for f in files}
+            conflicts = set(local) - set(incoming)
+            for name in set(local) & set(incoming):
+                if valid_file(local[name]) and hashlib.sha256(local[name].read_bytes()).digest() != hashlib.sha256(incoming[name].read_bytes()).digest():
+                    conflicts.add(name)
+            if conflicts:
+                result["conflicts"].append(f"{scene.name}: valid local files differ or extra files exist; left unchanged")
+                continue
+            needed = [f for f in files if not valid_file(target / f.name)]
+            if not needed:
                 result["skipped"].append(scene.name)
-            else:
-                result["conflicts"].append(
-                    f"{scene.name}: local folder differs from the shared one; left unchanged"
-                )
-            continue
-        if not files:
-            result["conflicts"].append(f"{scene.name}: shared folder is empty; not imported")
-            continue
+                continue
+        else:
+            needed = files
         tmp = Path(tempfile.mkdtemp(prefix=f".{scene.name}-", dir=dest))
         try:
-            for f in files:
+            for f in needed:
                 shutil.copy2(f, tmp / f.name)
-            tmp.rename(target)
-        except BaseException:
-            shutil.rmtree(tmp, ignore_errors=True)
-            raise
-        result["added"].append(scene.name)
+                if not valid_file(tmp / f.name):
+                    raise ValueError(f"Copy validation failed: {f.name}")
+            if existed:
+                for f in needed:
+                    (tmp / f.name).replace(target / f.name)
+                result["repaired"].append(scene.name)
+            else:
+                tmp.rename(target)
+                result["added"].append(scene.name)
+        finally:
+            if tmp.exists():
+                shutil.rmtree(tmp)
     return result
 
 
@@ -144,7 +176,7 @@ def merge_distances(src_conf, dest_conf):
 def fetch_drive(folder, output, dest, gdown=None, attempts=3, wait=5.0, sleep=None):
     """Download a shared Drive folder file by file.
 
-    Scenes that already exist in ``dest`` are not downloaded again, which keeps
+    Valid local files in ``dest`` are reused; missing or corrupt files are downloaded, which keeps
     the number of Drive requests (and rate-limit failures) low. A scene with any
     failed file is removed from ``output`` so it can never be imported half-done.
     Returns dict(failed=[scenes], present=[scenes], duplicates=[paths]).
@@ -156,6 +188,7 @@ def fetch_drive(folder, output, dest, gdown=None, attempts=3, wait=5.0, sleep=No
     sleep = sleep or time.sleep
     output, dest = Path(output), Path(dest)
     kwargs = dict(url=folder) if folder.startswith("http") else dict(id=folder)
+    print("Reading Google Drive file list...", flush=True)
     listing = gdown.download_folder(
         output=str(output), quiet=True, skip_download=True, **kwargs
     )
@@ -174,19 +207,28 @@ def fetch_drive(folder, output, dest, gdown=None, attempts=3, wait=5.0, sleep=No
 
     result = dict(failed=set(), present=set(), duplicates=sorted(set(duplicates)))
     for rel, (file_id, scene) in sorted(wanted.items()):
-        if scene and (dest / scene).exists():
-            result["present"].add(scene)
-            continue
         if scene in result["failed"]:
             continue
         target = output / rel
         target.parent.mkdir(parents=True, exist_ok=True)
+        if scene:
+            parts = rel.parts
+            offset = parts.index(scene)
+            local = dest / Path(*parts[offset:])
+            if valid_file(local):
+                shutil.copy2(local, target)
+                result["present"].add(scene)
+                continue
         for attempt in range(1, attempts + 1):
             try:
-                if gdown.download(id=file_id, output=str(target), quiet=True) and target.is_file():
-                    break
-            except Exception:
-                pass
+                print(f"Downloading {rel} (attempt {attempt}/{attempts})", flush=True)
+                if not gdown.download(id=file_id, output=str(target), quiet=True) or not valid_file(target):
+                    raise ValueError("Downloaded file is empty or cannot be decoded")
+                print(f"Verified {rel}: {target.stat().st_size} bytes", flush=True)
+                break
+            except Exception as error:
+                print(f"Download failed: {rel}: {error}", flush=True)
+                target.unlink(missing_ok=True)
             if attempt < attempts:
                 sleep(wait * attempt)
         else:
