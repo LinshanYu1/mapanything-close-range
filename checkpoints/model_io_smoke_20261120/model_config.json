@@ -1,0 +1,10 @@
+{
+  "format_version": 1,
+  "architecture": "mapanything_close_range_v1",
+  "base_model": "facebook/map-anything",
+  "revision": "a1d87e9086706fb9974f3be5a3e3a0ca5401c5aa",
+  "variant": "AB",
+  "feature_dim": 1536,
+  "a_hidden_dim": 128,
+  "b_hidden_dim": 128
+}
