@@ -37,17 +37,30 @@ from close_range.data_split import load_split
 #     "model_best.pt",
 # ]
 
+# TRAIN_ARGS = [
+#     "A",                          # 改为 B
+#     "configs/phone_split.json", # 使用相同的数据划分
+#     "checkpoints/phone_A", # 新训练必须使用空目录，不覆盖共享权重
+#     "mps",
+#     30,                            # 先跑 2 轮检查，再做正式训练
+#     5e-4,
+#     0.1,                          # 跨视角一致性损失权重
+#     443,
+#     "checkpoints/graspnet_A",       # 把之前graspnet_A 训练的参数当成其实参数
+#     "model_best.pt",
+# ]
+
 TRAIN_ARGS = [
-    "A",                          # 改为 B
-    "configs/phone_split.json", # 使用相同的数据划分
-    "checkpoints/phone_A", # 新训练必须使用空目录，不覆盖共享权重
-    "mps",
-    30,                            # 先跑 2 轮检查，再做正式训练
-    5e-4,
-    0.1,                          # 跨视角一致性损失权重
-    443,
-    "checkpoints/graspnet_A",       # 把之前graspnet_A 训练的参数当成其实参数
-    "model_best.pt",
+    "AB",                             # 同时训练 A 和 B
+    "configs/mixed_split.json",        # GraspNet＋Phone 混合划分
+    "checkpoints/mixed_AB_run1",       # 新的输出目录，不能已有训练结果
+    "mps",                            # Mac GPU
+    30,
+    5e-4,                             # 学习率
+    0.1,                              # 跨视角一致性损失权重
+    443,                              # 随机种子
+    None,                             # 初始化新的 A、B
+    "model_best.pt",                   # None 时这一项不用于加载
 ]
 
 def ordered_args(values):
