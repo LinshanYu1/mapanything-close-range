@@ -103,7 +103,17 @@ def load_split(path):
             if manifest_path in paths:
                 raise ValueError(f"{name} 存在重复清单：{entry}")
             manifest = json.loads(manifest_path.read_text())
-            identity = (manifest["source"], manifest.get("original_scene") or manifest["scene_id"])
+            if manifest["source"] == "tartanair":
+                identity = (
+                    manifest["source"],
+                    manifest["original_scene"],
+                    manifest["trajectory"],
+                )
+            else:
+                identity = (
+                    manifest["source"],
+                    manifest.get("original_scene") or manifest["scene_id"],
+                )
             if identity in owners and owners[identity] != name:
                 raise ValueError(f"原始场景跨集合重复：{identity}")
             owners[identity] = name
