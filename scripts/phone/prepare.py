@@ -12,6 +12,21 @@ from PIL import Image, ImageOps
 from mapanything.utils.image import find_closest_aspect_ratio
 from mapanything.utils.cropping import crop_resize_if_necessary
 
+''''扫描场景
+遍历 data/raw/phone/ 下的 scene-* 文件夹，一组照片作为一个场景。
+
+读取实测距离
+从 distances.conf 找到该场景的人工测量距离，并检查数值和单位。
+
+检查照片
+检查格式、图片能否读取，以及同一场景是否混用了横拍和竖拍照片。
+
+调整图片
+根据照片方向信息转正、转换为 RGB，然后按模型要求缩放和必要裁剪，保存为 PNG。原图保持不变。
+
+生成 manifest 清单
+记录处理后的图片路径、尺寸、参考图、文件指纹等，供标注、训练和测试使用。'''
+
 
 def prepare_scene(a):
     if "/" in a.scene or ".." in a.scene:

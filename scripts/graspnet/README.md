@@ -12,6 +12,7 @@
 | `download_all.py` | 下载并解压全部 7 个官方场景包 |
 | `download_mirror.py` | 从第三方镜像下载完整场景数据，校验并解压 |
 | `prepare.py` | 把原始数据转换成模型输入图片、点对距离标签和清单 |
+| `make_split.py` | 按原始场景生成固定的训练、验证、测试清单，不复制图片 |
 | `../predict_directory.py` | 通用脚本：批量检查输入，或执行模型预测和距离评估 |
 
 三个 download 脚本是不同下载入口，选择一个即可，不需要全部运行。“全部下载”指场景数据，不包含网站上其他独立资源，例如物体模型和抓取标注包。
@@ -138,7 +139,32 @@ bash scripts/local.sh scripts/graspnet/prepare.py --scene scene_0000 --name scen
 
 补充参数：`--raw-root` 指定直接包含 `scene_XXXX` 的原始目录；`--data-root` 指定输出数据根目录；`--seed` 控制选点随机种子，默认 0。`--name` 只能和 `--scene` 一起使用。部分输出已存在时会报错；单个场景失败后继续其他场景，最后以非零退出码提示失败。
 
-### 1.5 predict_directory.py：检查或预测
+### 1.5 make_split.py：单来源与混合数据划分
+
+共用函数位于 `src/close_range/data_split.py`：
+
+```python
+make_split(
+    ["data/manifests/graspnet", "data/manifests/phone"],
+    "configs/mixed_split.json",
+)
+```
+
+统一入口 `scripts/tools/make_split.py` 顶部提供目录数组，可直接运行，或执行：
+
+```bash
+bash scripts/local.sh scripts/tools/make_split.py --manifests data/manifests/graspnet data/manifests/phone --output configs/mixed_split.json
+```
+
+旧 `scripts/graspnet/make_split.py` 保留为只传 GraspNet 目录的兼容入口，支持 --seed 和 --output。
+默认 seed=443，已有文件不覆盖。输入目录、图片、标注缺失会报错，不静默省略某一数据来源。
+按原始场景分组：GraspNet 保留 0100–0189 为测试，0000–0099 按 80/20 分训练和验证；0000、0017 固定用于验证。
+不再要求完整 190 场景，但训练和验证必须非空；旧 pilot 缺少标准原始场景信息时需先整理。
+Phone 约 70/15/15 划分，至少三个独立场景，scene-001 留在验证集。同一布置应填写相同 original_scene。
+输出 train/val/test 的 manifest 列表和来源统计；训练时读取这一份 JSON 即可混合训练。
+仓库已有正式划分时可直接复用，不必重新生成。其他已用于开发的场景需要人工复核测试独立性。
+
+### 1.6 predict_directory.py：检查或预测
 
 这个通用脚本位于 `scripts/` 下，遍历 `--input` 中每个场景目录；一张图片采用单图模式，多张采用多图模式。
 
@@ -163,7 +189,9 @@ data/processed + data/annotations + data/manifests
     ↓ predict_directory.py --check-only + 标注预览抽查
 确认数据准备完成
     ↓
-按原始场景划分训练/验证/测试集，开始训练
+make_split.py 生成固定划分（已有则复用）
+    ↓
+training/main.py 开始训练
 ```
 
 ### 2.1 下载并确认原始文件完整
@@ -232,21 +260,20 @@ bash scripts/local.sh scripts/predict_directory.py --input data/processed/graspn
 如果以上都通过，就可以认为“下载和前期处理完成”，下一步是划分训练集、验证集和测试集并开始训练。同一原始场景的不同相机、视角和处理组必须放入同一划分，避免泄漏；数据全部下载下来不等于全部用于训练。
 
 
+### 2.5 衔接训练：生成或复用划分
+
+完成输入检查和标签抽查后，检查 `configs/graspnet_split.json`：
+
+- **文件已存在**：复用它，确认对应 manifest 均已准备好，不必运行 make_split。
+- **文件不存在**：执行 `bash scripts/local.sh scripts/graspnet/make_split.py`。
+
+随后在 `src/close_range/training/main.py` 的数组中选择 A/B/AB、这份划分文件和一个新的空输出目录，再启动训练。
+如果报“缺少数据划分”，不是要求重新下载或预处理，而是需要完成本步骤。
+PyCharm 使用项目 `.venv/bin/python`（Python 3.12）。
+
 ## 3. 历史验证记录（2026-10-31）
 
 以下为历史单场景验证，不代表当前完整数据已经逐一通过检查。本次实测：默认扫描本地根目录，发现 scene_0017，使用 RealSense 的 0000、0012、0024 三帧重新生成数据；3 张 RGB PNG 均为 518×294。实际推理入口的 `prepare_inputs` 和官方 `load_images` 均成功读取。额外检查了 10 对标签距离均为正且有限、A/B 坐标位于图片范围内，并确认生成了 10 张预览。批量输入状态为 `checked`。
 
 
 范围说明：本次没有实际测试官方网络下载，没有执行模型推理，没有人工逐张审核点位，也没有独立验证传感器距离的准确度。
-
-## 预处理完成后生成固定划分
-
-```bash
-bash scripts/local.sh scripts/graspnet/make_split.py
-```
-
-只执行一次，已有划分不会覆盖。要求 190 个原始场景的处理清单齐全，旧 pilot 排除。
-官方 0–99 场景划为 80 个训练、20 个验证；100–189 的 90 个场景留作测试。
-已用于开发的 0000、0017 固定在验证集，其余按种子 443 划分。同一原始场景的所有组进入同一集合。
-生成 configs/graspnet_split.json，A/B/AB 共用。若其他测试场景也已用于调参，正式实验前应调整测试范围并记录。
-PyCharm 必须选择本项目 .venv/bin/python（Python 3.12），而非此前外部的 Python 3.14 环境。

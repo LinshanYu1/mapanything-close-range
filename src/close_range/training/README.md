@@ -143,3 +143,24 @@ bash scripts/local.sh scripts/graspnet/make_split.py
 已用于开发的 0000、0017 固定在验证集，其余按种子 443 划分。同一原始场景的所有组进入同一集合。
 生成 configs/graspnet_split.json，A/B/AB 共用。若其他测试场景也已用于调参，正式实验前应调整测试范围并记录。
 PyCharm 必须选择本项目 .venv/bin/python（Python 3.12），而非此前外部的 Python 3.14 环境。
+
+## 多来源共用划分（推荐）
+
+```python
+from close_range.data_split import make_split
+
+make_split(
+    ["data/manifests/graspnet", "data/manifests/phone"],
+    "configs/mixed_split.json",
+)
+```
+
+也可直接运行 `scripts/tools/make_split.py`，修改顶部 MANIFESTS_PATH 数组和 OUTPUT_PATH。
+只传 phone 目录就生成 Phone 划分；只传 graspnet 就生成 GraspNet 划分。
+每个目录必须存在且有清单，图片与标注须通过 Dataset 校验，缺失时明确报错，不生成半份混合配置。
+GraspNet 保留官方测试范围，训练范围按 80/20 分训练与验证；不再要求必须下载齐 190 个场景。
+Phone 按独立场景约 70/15/15 划分，至少 3 个场景。已开发的 scene-001 放验证集，其他已开发场景需人工复核，不能冒充独立测试。
+Phone 的同一布置若有多个编号，应在 manifest 的 original_scene 中填写同一分组标识。
+训练数组中使用 configs/mixed_split.json，即会读取两类训练数据；各来源验证结果由 Trainer 分别汇总。
+划分生成一次后固定使用，已有文件拒绝覆盖。此功能不会自动恢复缺失数据，也不意味着两种来源在训练中数量平衡。
+旧 scripts/graspnet/make_split.py 仅是单来源兼容入口，共用同一实现，不再跳过旧 pilot：缺少原始场景信息的清单需先整理。
