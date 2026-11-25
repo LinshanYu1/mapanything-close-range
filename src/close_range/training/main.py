@@ -109,6 +109,50 @@ def parse_args(argv=None):
     return args
 
 
+def load_split(path):
+    """固定清单；按原始场景和图片指纹检查各集合之间的泄漏。"""
+    path = project_path(path)
+    if not path.is_file():
+        raise FileNotFoundError("缺少数据划分。预处理完成后先运行：python scripts/graspnet/make_split.py；此步骤只需执行一次。")
+    split = json.loads(path.read_text())
+    if not isinstance(split, dict):
+        raise ValueError("split 必须是 JSON 对象")
+    result, owners, image_owners = {}, {}, {}
+    for name in ("train", "val", "test"):
+        entries = split.get(name, [])
+        if not isinstance(entries, list) or (name != "test" and not entries):
+            raise ValueError(f"{name} 必须是非空的 manifest 路径列表")
+        paths = []
+        for entry in entries:
+            if not isinstance(entry, str):
+                raise ValueError(f"{name} 中的路径必须是字符串")
+            manifest_path = project_path(entry)
+            if manifest_path in paths:
+                raise ValueError(f"{name} 存在重复清单：{entry}")
+            manifest = json.loads(manifest_path.read_text())
+            if manifest["source"] == "tartanair":
+                identity = (
+                    manifest["source"],
+                    manifest["original_scene"],
+                    manifest["trajectory"],
+                )
+            else:
+                identity = (
+                    manifest["source"],
+                    manifest.get("original_scene") or manifest["scene_id"],
+                )
+            if identity in owners and owners[identity] != name:
+                raise ValueError(f"原始场景跨集合重复：{identity}")
+            owners[identity] = name
+            for view in manifest["views"]:
+                digest = view["sha256"]
+                if digest in image_owners and image_owners[digest] != name:
+                    raise ValueError(f"图片跨集合重复：{entry}")
+                image_owners[digest] = name
+            paths.append(manifest_path)
+        result[name] = paths
+    return result
+
 
 def main(argv=None):
     args = parse_args(ordered_args(TRAIN_ARGS) if argv is None else argv)

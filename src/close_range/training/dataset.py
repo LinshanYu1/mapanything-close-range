@@ -1,4 +1,4 @@
-"""Phone / GraspNet 场景训练数据集。"""
+"""Phone / GraspNet / TartanAir 场景训练数据集。"""
 
 import hashlib
 import json
@@ -88,7 +88,7 @@ class SceneDistanceDataset(Dataset):
         views = manifest["views"]
         reference_index = manifest["reference_index"]
 
-        if source not in {"phone", "graspnet"}:
+        if source not in {"phone", "graspnet", "tartanair"}:
             raise ValueError(f"{scene_id}: 不支持的数据来源 {source}")
 
         if len(views) < 1:
