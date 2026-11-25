@@ -79,20 +79,51 @@ class Trainer:
 
     def compute_loss(self, sample):
         target = sample["target_distances_m"].to(self.device)
-        d1 = self.predict_distances(sample["views_1"], sample["points_xy"])
-        d2 = None
-        if sample["views_2"] is not None:
-            d2 = self.predict_distances(sample["views_2"], sample["points_xy"])
-        losses = distance_loss(d1, target, d2, self.consistency_weight)
-        distances = torch.stack([d1] if d2 is None else [d1, d2])
-        metrics = {
-            key: value.detach().item() for key, value in losses.items()
-        }
-        metrics.update(
-            mae_cm=(distances.detach() - target).abs().mean().item() * 100,
-            relative_error=((distances.detach() - target).abs() / target).mean().item(),
-            subset_gap_cm=None if d2 is None else (d1.detach() - d2.detach()).abs().mean().item() * 100,
+
+        # 每个子集得到一组预测距离。
+        # 堆叠后形状：[子集数量, 标注点对数量]
+        distances = torch.stack([
+            self.predict_distances(views, sample["points_xy"])
+            for views in sample["view_groups"]
+        ])
+
+        losses = distance_loss(
+            distances,
+            target,
+            consistency_weight=self.consistency_weight,
         )
+
+        # 指标不参与反向传播。
+        predictions = distances.detach()
+        errors = (predictions - target).abs()
+
+        # 所有不同子集之间的距离差，取平均，单位为 cm。
+        num_groups = predictions.shape[0]
+        subset_gap_cm = None
+
+        if num_groups > 1:
+            i, j = torch.triu_indices(
+                num_groups,
+                num_groups,
+                offset=1,
+                device=predictions.device,
+            )
+            subset_gap_cm = (
+                    (predictions[i] - predictions[j]).abs().mean().item()
+                    * 100
+            )
+
+        metrics = {
+            key: value.detach().item()
+            for key, value in losses.items()
+        }
+
+        metrics.update(
+            mae_cm=errors.mean().item() * 100,
+            relative_error=(errors / target).mean().item(),
+            subset_gap_cm=subset_gap_cm,
+        )
+
         return losses["loss"], metrics
 
     def train_step(self, sample):

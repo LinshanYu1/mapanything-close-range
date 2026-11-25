@@ -15,6 +15,9 @@ from mapanything.utils.inference import (
     validate_input_views_for_inference,
     preprocess_input_views_for_inference,
 )
+import random
+from itertools import combinations
+
 
 
 class SceneDistanceDataset(Dataset):
@@ -210,21 +213,27 @@ class SceneDistanceDataset(Dataset):
         """训练器每轮开始时调用，让训练视角组合随轮次变化。"""
         self.epoch = epoch
 
-    def _select_supports(self, scene):
-        """选择两张不同的辅助照片，参考图始终不变。"""
-        candidates = [
+    def _select_view_groups(self, scene):
+        reference = scene["reference_index"]
+        num_views = len(scene["views"])
+
+        if num_views == 1:
+            return [[reference]]
+
+        supports = [
             index
-            for index in range(len(scene["views"]))
-            if index != scene["reference_index"]
+            for index in range(num_views)
+            if index != reference
         ]
 
-        if len(candidates) < 2:
-            raise ValueError("一致性采样需要至少两张辅助照片")
+        # 每组必须包含参考图，至少再选一张辅助图。
+        candidates = []
+        for count in range(1, len(supports) + 1):
+            for subset in combinations(supports, count):
+                candidates.append([reference, *subset])
 
-        # 验证集每轮保持同一组合。
+        # 训练时随轮次变化，验证时保持固定。
         epoch = self.epoch if self.training else 0
-
-        # 使用稳定的场景级种子，不依赖 Python 的随机 hash。
         seed_text = (
             f"{self.seed}:{epoch}:"
             f"{scene['source']}:{scene['scene_id']}"
@@ -233,7 +242,9 @@ class SceneDistanceDataset(Dataset):
         local_seed = int.from_bytes(digest[:8], byteorder="big")
 
         rng = random.Random(local_seed)
-        return rng.sample(candidates, k=2)
+        return rng.sample(candidates, k=num_views - 1)
+
+
 
     def _load_subset(self, scene, indices):
         """按给定编号加载一组图片，参考图必须在第一位。"""
@@ -265,35 +276,32 @@ class SceneDistanceDataset(Dataset):
     def __getitem__(self, index):
         scene = self.scenes[index]
 
-        reference = scene["reference_index"]
-        views_2 = None
-        view_ids_2 = None
-
-        if self.use_consistency and len(scene["views"]) >= 3:
-            support_1, support_2 = self._select_supports(scene)
-            indices_1 = [reference, support_1]
-            views_2, view_ids_2 = self._load_subset(
-                scene, [reference, support_2]
-            )
+        if self.use_consistency:
+            groups = self._select_view_groups(scene)
         else:
-            # 普通单组输入：一张也可以，不丢弃其他已有视角。
-            indices_1 = [reference] + [
-                i for i in range(len(scene["views"])) if i != reference
-            ]
+            reference = scene["reference_index"]
+            groups = [[reference] + [
+                i for i in range(len(scene["views"]))
+                if i != reference
+            ]]
 
-        views_1, view_ids_1 = self._load_subset(scene, indices_1)
+        view_groups = []
+        view_id_groups = []
+
+        for indices in groups:
+            views, view_ids = self._load_subset(scene, indices)
+            view_groups.append(views)
+            view_id_groups.append(view_ids)
 
         return {
             "scene_id": scene["scene_id"],
             "source": scene["source"],
-            "views_1": views_1,
-            "views_2": views_2,
-            "view_ids_1": view_ids_1,
-            "view_ids_2": view_ids_2,
+            "view_groups": view_groups,
+            "view_id_groups": view_id_groups,
             "pair_ids": [pair["id"] for pair in scene["pairs"]],
-            "points_xy": torch.stack(
-                [pair["points_xy"] for pair in scene["pairs"]]
-            ),
+            "points_xy": torch.stack([
+                pair["points_xy"] for pair in scene["pairs"]
+            ]),
             "target_distances_m": torch.tensor(
                 [pair["distance_m"] for pair in scene["pairs"]],
                 dtype=torch.float32,
