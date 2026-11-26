@@ -1,7 +1,7 @@
-"""汇总 run_eval.py 的 results.csv：总体和按距离分段的误差统计。
+"""汇总 close_range.evaluation.run 的 results.csv：总体和按距离分段的误差统计。
 
-  bash scripts/local.sh scripts/eval/summarize.py outputs/eval/phone/results.csv
-  bash scripts/local.sh scripts/eval/summarize.py outputs/eval/*/results.csv --latex
+  bash scripts/local.sh -m close_range.evaluation.summarize outputs/eval/phone/results.csv
+  bash scripts/local.sh -m close_range.evaluation.summarize outputs/eval/*/results.csv --latex
 
 统计单位是点对（手机每个场景 1 对，GraspNet 每个场景通常 10 对）。
 无效预测计入"无效"并算作失败（不在 10%/20% 以内），中位误差只统计有效预测。
@@ -62,11 +62,11 @@ def fmt(v):
     return "-" if v is None else (f"{v:.1f}" if isinstance(v, float) else str(v))
 
 
-def main():
+def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("results", nargs="+")
     p.add_argument("--latex", action="store_true", help="另外输出 LaTeX 表格行")
-    a = p.parse_args()
+    a = p.parse_args(argv)
     summary = table(load(a.results))
     out = Path(a.results[0]).with_name("summary.csv")
     with out.open("w", newline="") as f:
