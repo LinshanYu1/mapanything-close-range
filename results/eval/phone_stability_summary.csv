@@ -1,0 +1,13 @@
+source,model,bin,pairs,median_cv_pct,mean_cv_pct,median_range_gt_pct,cv_le_5pct,median_mean_rel_err_pct,excluded_pairs
+phone,baseline,all,52,5.1,6.3,18.8,50.0,49.7,7
+phone,A,all,52,5.3,6.6,9.5,48.1,36.5,7
+phone,B,all,53,3.0,4.3,13.3,66.0,42.0,6
+phone,baseline,<20cm,12,6.2,10.6,67.1,25.0,192.6,1
+phone,A,<20cm,12,8.4,9.7,29.3,41.7,26.5,1
+phone,B,<20cm,12,3.0,5.7,25.7,58.3,169.8,1
+phone,baseline,20-60cm,24,4.3,5.2,17.8,54.2,46.6,4
+phone,A,20-60cm,24,5.8,6.3,9.7,45.8,30.4,4
+phone,B,20-60cm,26,3.6,4.4,14.2,61.5,46.4,2
+phone,baseline,>=60cm,16,4.0,4.8,12.3,62.5,15.0,2
+phone,A,>=60cm,16,4.4,4.7,4.3,56.2,49.6,2
+phone,B,>=60cm,15,2.1,3.1,5.9,80.0,11.4,3
