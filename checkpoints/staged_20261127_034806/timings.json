@@ -1,0 +1,23 @@
+[
+  {
+    "stage": "benchmark",
+    "variant": "A",
+    "epochs": 1,
+    "elapsed_seconds": 587.2334627499949,
+    "returncode": 0
+  },
+  {
+    "stage": "benchmark",
+    "variant": "B",
+    "epochs": 1,
+    "elapsed_seconds": 1811.0715942089955,
+    "returncode": 0
+  },
+  {
+    "stage": "benchmark",
+    "variant": "AB",
+    "epochs": 1,
+    "elapsed_seconds": 1999.514339541005,
+    "returncode": 0
+  }
+]

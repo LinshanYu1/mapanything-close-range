@@ -87,6 +87,8 @@ def parse_args(argv=None):
     parser.add_argument("--split", required=True, help="JSON，包含 train/val，可选 test；路径相对于项目根目录")
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--device", choices=("mps", "cuda", "cpu"), default="mps")
+    parser.add_argument("--validation-interval", type=int, default=3, help="每几轮验证；最后一轮必验证")
+    parser.add_argument("--no-encoder-cache", action="store_true", help="禁用冻结编码器缓存")
     parser.add_argument("--epochs", type=int, default=2)
     parser.add_argument("--learning-rate", type=float, default=5e-4)
     parser.add_argument("--consistency-weight", type=float, default=None,
@@ -98,6 +100,8 @@ def parse_args(argv=None):
     parser.add_argument("--weights-name", choices=("model.pt", "model_best.pt"),
                         default="model_best.pt", help="init-from 使用的权重文件")
     args = parser.parse_args(argv)
+    if args.validation_interval < 1:
+        parser.error("validation-interval 必须大于0")
     if args.epochs < 1:
         parser.error("epochs 必须大于 0")
     if not math.isfinite(args.learning_rate) or args.learning_rate <= 0:
@@ -151,13 +155,13 @@ def main(argv=None):
     trainer = Trainer.from_pretrained(
         output_dir=output, variant=args.variant, device=args.device,
         learning_rate=args.learning_rate, consistency_weight=args.consistency_weight,
-        seed=args.seed, pretrained_revision=revision,
+        seed=args.seed, pretrained_revision=revision, encoder_cache=not args.no_encoder_cache,
     )
     if args.init_from:
         load_module_parameters(trainer.model, source, args.weights_name)
     if initialization is not None:
         trainer.config["initialization"] = initialization
-    trainer.fit(train, val, epochs=args.epochs, resume=resume)
+    trainer.fit(train, val, epochs=args.epochs, resume=resume, validation_interval=args.validation_interval)
     print(f"训练完成：{output}", flush=True)
     for name in ("model.pt", "model_best.pt"):
         if (output / name).is_file():

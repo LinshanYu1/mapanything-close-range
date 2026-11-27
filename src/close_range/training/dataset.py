@@ -242,7 +242,8 @@ class SceneDistanceDataset(Dataset):
         local_seed = int.from_bytes(digest[:8], byteorder="big")
 
         rng = random.Random(local_seed)
-        return rng.sample(candidates, k=num_views - 1)
+        # 保留原来的 N-1 组采样规则，但每个场景最多选 5 组。
+        return rng.sample(candidates, k=min(num_views - 1, 3))
 
 
 

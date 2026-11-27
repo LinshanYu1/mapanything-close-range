@@ -3,6 +3,7 @@ import hashlib
 import json
 import math
 import random
+import time
 from pathlib import Path
 
 import torch
@@ -19,7 +20,7 @@ from close_range.models.model_io import get_model_config, save_model
 class Trainer:
     def __init__(self, model, output_dir, variant="A", device="mps",
                  learning_rate=5e-4, consistency_weight=0.1, seed=0,
-                 pretrained_revision=REVISION):
+                 pretrained_revision=REVISION, encoder_cache=True):
         if variant not in {"A", "B", "AB"}:
             raise ValueError("目前支持 A、B、AB；M1 需要单独明确解冻范围")
         if not math.isfinite(learning_rate) or learning_rate <= 0:
@@ -45,10 +46,15 @@ class Trainer:
         )
         # 与已验证的训练方式一致：关闭 dropout，但不关闭 autograd。
         self.model.eval()
+        self.encoder_cache = None
+        if encoder_cache:
+            from .encoder_cache import FrozenEncoderCache
+            self.encoder_cache = FrozenEncoderCache(self.model)
+            self.model._encode_n_views = self.encoder_cache
         self.global_step = 0
         self.best_error = float("inf")
         self.config = dict(variant=variant, learning_rate=learning_rate,
-                           consistency_weight=consistency_weight, seed=seed,
+                           consistency_weight=consistency_weight, seed=seed, encoder_cache=encoder_cache,
                            pretrained_revision=pretrained_revision)
 
     @classmethod
@@ -77,15 +83,16 @@ class Trainer:
         b = xyz[points[:, 1, 1], points[:, 1, 0]]
         return torch.linalg.vector_norm(a - b, dim=-1)
 
-    def compute_loss(self, sample):
+    def compute_loss(self, sample, *, distances=None):
         target = sample["target_distances_m"].to(self.device)
 
         # 每个子集得到一组预测距离。
         # 堆叠后形状：[子集数量, 标注点对数量]
-        distances = torch.stack([
-            self.predict_distances(views, sample["points_xy"])
-            for views in sample["view_groups"]
-        ])
+        if distances is None:
+            distances = torch.stack([
+                self.predict_distances(views, sample["points_xy"])
+                for views in sample["view_groups"]
+            ])
 
         losses = distance_loss(
             distances,
@@ -128,8 +135,34 @@ class Trainer:
 
     def train_step(self, sample):
         self.optimizer.zero_grad(set_to_none=True)
-        loss, metrics = self.compute_loss(sample)
-        loss.backward()
+        self.model.eval()
+        if self.variant == "A":
+            # A 位于冻结主干之后，无需为了多组计算重复运行主干。
+            loss, metrics = self.compute_loss(sample)
+            loss.backward()
+        else:
+            # 第一遍只保留小型距离张量，不保留各组的大模型计算图。
+            # eval 禁用 dropout；两遍使用同一个 sample，中间不更新参数。
+            with torch.no_grad():
+                distances = torch.stack([
+                    self.predict_distances(views, sample["points_xy"])
+                    for views in sample["view_groups"]
+                ])
+            distances.requires_grad_(True)
+            loss, metrics = self.compute_loss(sample, distances=distances)
+            distance_grad, = torch.autograd.grad(loss, distances)
+
+            # 链式法则：逐组累加 (d loss / d distance) * (d distance / d params)。
+            # 每组 backward 后释放计算图；全部完成才裁剪梯度并更新一次参数。
+            for index, views in enumerate(sample["view_groups"]):
+                prediction = self.predict_distances(views, sample["points_xy"])
+                if not torch.allclose(
+                    prediction.detach(), distances[index].detach(), rtol=1e-4, atol=1e-6
+                ):
+                    self.optimizer.zero_grad(set_to_none=True)
+                    raise RuntimeError("两遍预测不一致；检查随机层或前向中修改的状态，停止参数更新")
+                prediction.backward(distance_grad[index])
+                del prediction
         norm = torch.nn.utils.clip_grad_norm_(
             self.parameters, max_norm=1.0, error_if_nonfinite=True
         )
@@ -216,7 +249,9 @@ class Trainer:
             ],
         }
 
-    def fit(self, train_dataset, val_dataset, epochs, resume=None):
+    def fit(self, train_dataset, val_dataset, epochs, resume=None, validation_interval=3):
+        if type(validation_interval) is not int or validation_interval < 1:
+            raise ValueError("validation_interval 必须为正整数")
         if epochs < 1:
             raise ValueError("epochs 必须为正数")
         if not train_dataset.training or val_dataset.training:
@@ -243,6 +278,7 @@ class Trainer:
         readable_config = dict(
             self.config,
             target_epochs=epochs,
+            validation_interval=validation_interval,
             device=str(self.device),
             optimizer="AdamW",
             weight_decay=0,
@@ -261,16 +297,29 @@ class Trainer:
         self.model._configure_geometric_input_config(False, False, False, False, False)
         try:
             for epoch in range(start_epoch, epochs):
+                epoch_start = time.perf_counter()
+                if self.encoder_cache is not None:
+                    cache_before = (self.encoder_cache.hits, self.encoder_cache.misses)
+                print(f"Epoch {epoch + 1}/{epochs} 开始", flush=True)
                 train = self.train_one_epoch(train_dataset, epoch)
-                validation = self.validate(val_dataset)
-                summary = validation["summary"]
-                error = summary["relative_error"]
-                improved = (summary["invalid_scenes"] == 0 and error is not None
-                            and error < self.best_error)
+                train_seconds = time.perf_counter() - epoch_start
+                should_validate = (epoch + 1) % validation_interval == 0 or epoch + 1 == epochs
+                validation, error, improved = None, None, False
+                validation_seconds = 0.0
+                if should_validate:
+                    validation_start = time.perf_counter()
+                    validation = self.validate(val_dataset)
+                    validation_seconds = time.perf_counter() - validation_start
+                    summary = validation["summary"]
+                    error = summary["relative_error"]
+                    improved = (summary["invalid_scenes"] == 0 and error is not None
+                                and error < self.best_error)
                 if improved:
                     self.best_error = error
                 report = dict(epoch=epoch + 1, global_step=self.global_step,
-                              train=train, validation=validation)
+                              train=train, validation=validation, validation_performed=should_validate,
+                              timing=dict(train_seconds=train_seconds,
+                                          validation_seconds=validation_seconds))
                 path = self.output_dir / "metrics" / f"epoch_{epoch + 1:04d}.json"
                 path.write_text(json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False))
                 metadata = dict(config=self.config, next_epoch=epoch + 1,
@@ -286,8 +335,13 @@ class Trainer:
                         self.model, self.output_dir, model_config, "model_best.pt",
                         epoch=epoch + 1, global_step=self.global_step,
                     )
+                if self.encoder_cache is not None:
+                    print(f"编码器缓存：本轮命中 {self.encoder_cache.hits - cache_before[0]} 张，"
+                          f"编码 {self.encoder_cache.misses - cache_before[1]} 张", flush=True)
                 print(f"Epoch {epoch + 1}: train loss={train['summary']['loss']:.6f}, "
-                      f"validation relative error={error}", flush=True)
+                      f"validation relative error={error if should_validate else '跳过本轮验证'}; "
+                      f"训练 {train_seconds / 60:.2f} 分钟，验证 {validation_seconds / 60:.2f} 分钟，"
+                      f"本轮总耗时（含保存）{(time.perf_counter() - epoch_start) / 60:.2f} 分钟", flush=True)
         finally:
             self.model._restore_original_geometric_input_config()
         return report
