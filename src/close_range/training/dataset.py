@@ -91,8 +91,8 @@ class SceneDistanceDataset(Dataset):
         views = manifest["views"]
         reference_index = manifest["reference_index"]
 
-        if source not in {"phone", "graspnet", "tartanair_v2"}:
-            raise ValueError(f"{scene_id}: 不支持的数据来源 {source}")
+        if not isinstance(source, str) or not source.strip():
+            raise ValueError(f"{scene_id}: source 必须是非空字符串")
 
         if len(views) < 1:
             raise ValueError(

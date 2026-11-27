@@ -45,3 +45,32 @@ class SplitTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError,'bad labels'):
                     make_split([root/'phone'],root/'split.json')
             self.assertFalse((root/'split.json').exists())
+
+    def test_dynamic_source_and_trajectory_groups(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            directory = root / "arbitrary_folder_v2"
+            directory.mkdir()
+            for trajectory in range(6):
+                for frame in range(2):
+                    name = f"{trajectory}_{frame}"
+                    (directory / f"{name}.json").write_text(json.dumps(dict(
+                        source="new_dataset", scene_id=name,
+                        original_scene="environment", trajectory=f"P{trajectory}",
+                        views=[dict(sha256=name)],
+                    )))
+            with patch("close_range.training.dataset.SceneDistanceDataset"):
+                split = make_split([directory], root / "split.json")
+            owners = {}
+            for part in ("train", "val", "test"):
+                for entry in split[part]:
+                    trajectory = json.loads(Path(entry).read_text())["trajectory"]
+                    self.assertEqual(owners.setdefault(trajectory, part), part)
+            self.assertEqual(len(owners), 6)
+            load_split(root / "split.json")
+            # 同一轨迹换一帧放入另一集合，必须拒绝。
+            entry = split["train"].pop(0)
+            split["val"].append(entry)
+            (root / "bad.json").write_text(json.dumps(split))
+            with self.assertRaisesRegex(ValueError, "原始场景跨集合重复"):
+                load_split(root / "bad.json")
