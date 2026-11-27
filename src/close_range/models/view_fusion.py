@@ -22,8 +22,9 @@ class ViewScorer(nn.Module):
         )
         nn.init.zeros_(self.net[-1].weight)
         nn.init.zeros_(self.net[-1].bias)
-
+    ## patches shape [batch_size,picture_size,patch_size, feature] 相当于有多少个场景，场景中图片的个数，每张图上有多少个局部位置，每个局部位置的token
     def forward(self, patches):
+        ## 这里取第二维
         scores = self.net(patches.mean(dim=2)).squeeze(-1)  # B,V
         # Relative view preference; no arbitrary common shift against scale tokens.
         return scores - scores.mean(dim=1, keepdim=True)
