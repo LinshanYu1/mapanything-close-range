@@ -1,0 +1,12 @@
+source,model,bin,pairs,median_cv_pct,mean_cv_pct,median_range_gt_pct,cv_le_5pct,median_mean_rel_err_pct,excluded_pairs
+graspnet,baseline,all,799,11.8,12.1,117.4,10.0,347.0,101
+graspnet,baseline,<20cm,475,11.8,11.9,119.8,8.8,342.1,62
+graspnet,baseline,20-60cm,324,11.8,12.3,112.4,11.7,348.8,39
+phone,baseline,all,9,7.5,6.8,28.8,22.2,57.1,0
+phone,baseline,<20cm,3,6.1,6.4,91.3,0.0,322.8,0
+phone,baseline,20-60cm,5,7.5,6.8,27.3,40.0,35.6,0
+phone,baseline,>=60cm,1,7.7,7.7,43.9,0.0,104.7,0
+tartanair,baseline,all,121,1.6,2.9,3.4,88.4,14.1,9
+tartanair,baseline,<20cm,51,2.1,3.0,4.5,88.2,21.2,5
+tartanair,baseline,20-60cm,48,1.4,2.5,2.8,89.6,11.5,4
+tartanair,baseline,>=60cm,22,1.4,3.5,3.0,86.4,9.8,0
