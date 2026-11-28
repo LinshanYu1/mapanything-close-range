@@ -1,0 +1,23 @@
+{
+  "split": "a3a95471fdd2bd615ae4d55be337c2dabcc5d33cccbbac451d33749eed90a34e",
+  "device": "mps",
+  "seed": 443,
+  "sizes": [
+    2,
+    3
+  ],
+  "max_subsets": 6,
+  "include_full": true,
+  "A": {
+    "weights": "35ef27ff0901240f05a53fe87f8e71ee74f928eb323001bbd4d8867856bd7cd7",
+    "config": "1216fe0c190654db57449be83ab4657430a24e8f2fcd2765d1b56610c5b15d65"
+  },
+  "B": {
+    "weights": "32995a548ff3b7c4e9598acad55f3cb5c944654a18714fafb826d104e7cc3f25",
+    "config": "1d5be685cc6ac40f8a8e21252a500142a4f0e4864cc8b6c3582decd7f12aa289"
+  },
+  "AB": {
+    "weights": "afc9f29b03e2e340e63e6ae681ee2e356b7682ced3a696dbea6596a7598ee44f",
+    "config": "05ab1810ab70f2a275aefd217de2e4f177e49c55a1abb8a11aeb0b5e3690cc62"
+  }
+}

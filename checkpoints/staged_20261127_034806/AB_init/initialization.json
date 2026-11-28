@@ -1,0 +1,5 @@
+{
+  "A": "checkpoints/staged_20261127_034806/train/A",
+  "B": "checkpoints/staged_20261127_034806/train/B",
+  "weights_name": "model_best.pt"
+}
